@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "fZVQlNctF2ENMRr1gZykahBt0Iq40Yiv0uIFabLo69o=",
+  "Source": "DoubleLStore.WebApp",
+  "BasePath": "_content/DoubleLStore.WebApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
