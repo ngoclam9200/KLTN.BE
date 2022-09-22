@@ -11,5 +11,6 @@ namespace DoubleLStore.WebApp.Entities
         public double Discountfreeship { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateExpiration { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

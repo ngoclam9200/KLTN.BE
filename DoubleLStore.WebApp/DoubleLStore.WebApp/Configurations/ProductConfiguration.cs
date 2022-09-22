@@ -11,8 +11,8 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("Products");
             builder.HasKey(x=>x.Id);
+            builder.Property(x => x.isDeleted).HasDefaultValue(false);
 
-                
-                }
+        }
     }
 }

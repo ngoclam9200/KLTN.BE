@@ -9,5 +9,6 @@ namespace DoubleLStore.WebApp.Entities
         public string Name { get; set; }
         public int Distance { get; set; }
         public string Description { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

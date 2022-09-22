@@ -26,6 +26,9 @@ namespace DoubleLStore.WebApp.EF
             modelBuilder.ApplyConfiguration(new StatusOrderConfiguration());
             modelBuilder.ApplyConfiguration(new ImageProductConfiguration());
             modelBuilder.ApplyConfiguration(new CostConfiguration());
+            modelBuilder.ApplyConfiguration(new SalaryStaffConfiguration());
+            modelBuilder.ApplyConfiguration(new CostProductConfiguration());
+
             base.OnModelCreating(modelBuilder);    
         }
         public DbSet<Roles> Roles { get; set; }
@@ -40,6 +43,9 @@ namespace DoubleLStore.WebApp.EF
         public DbSet<StatusOrders> StatusOrders { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Vouchers> Vouchers { get; set; }
+        public DbSet<SalaryStaff> SalaryStaffs { get; set; }
+        public DbSet<CostProduct> CostProducts { get; set; }
+        public DbSet<ImageProduct> ImageProducts { get; set; }
         public object HttpContext { get; internal set; }
     }
 }

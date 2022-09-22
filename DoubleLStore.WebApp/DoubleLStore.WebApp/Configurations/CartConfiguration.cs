@@ -10,6 +10,6 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("Carts");
             builder.HasKey(x => x.Id);
-        }
+         }
     }
 }

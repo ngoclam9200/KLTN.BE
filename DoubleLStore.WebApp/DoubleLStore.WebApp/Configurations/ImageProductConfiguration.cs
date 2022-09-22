@@ -10,6 +10,8 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("ImageProducts");
             builder.HasKey(x => x.Id);
+            builder.Property(x=>x.isDefaut).HasDefaultValue(false);
+
         }
     }
 }

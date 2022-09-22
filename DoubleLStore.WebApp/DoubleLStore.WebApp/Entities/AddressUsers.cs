@@ -9,6 +9,7 @@ namespace DoubleLStore.WebApp.Entities
         public string UserId { get; set; }
         public string Address { get; set; }
         public Users User { get; set; }
+        public bool isDeleted   { get; set; }
         
     }
 }

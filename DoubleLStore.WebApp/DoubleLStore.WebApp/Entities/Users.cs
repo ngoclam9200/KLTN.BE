@@ -12,9 +12,12 @@ namespace DoubleLStore.WebApp.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public string Phonenumber {get; set;}
-        public DateTime  DateCreated { get; set; }
+        public string Phonenumber { get; set; }
+        public DateTime DateCreated { get; set; }
         public Roles Role { get; set; }
+        public string Avatar {get; set;}
+        public string Gender { get; set;}
+        public bool isDeleted { get; set; }
 
     }
 }

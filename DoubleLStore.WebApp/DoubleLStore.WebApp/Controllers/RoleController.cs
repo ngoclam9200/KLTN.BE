@@ -15,19 +15,16 @@ namespace DoubleLStore.WebApp.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-
-
         private readonly doubleLStoreDbContext _context;
         private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
-
         public RoleController(doubleLStoreDbContext context, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _context = context;
             _jwtAuthenticationManager = jwtAuthenticationManager;
 
         }
-        
-        
+      
+      
         [HttpGet("get-all-roles")]
         [Authorize]
         public async Task<IActionResult> GetAllRole()
@@ -49,7 +46,7 @@ namespace DoubleLStore.WebApp.Controllers
 
             if (RoleId == "1")
             {
-                var listrole = await _context.Roles.ToListAsync();
+                var listrole = await _context.Roles.Where(x=>x.isDeleted==false).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = listrole });
             }
             else return BadRequest(new Response { Status = 400, Message = "Not found" });
@@ -185,7 +182,8 @@ namespace DoubleLStore.WebApp.Controllers
 
                     try
                     {
-                        _context.Roles.Remove(role);
+                        //_context.Roles.is(role);
+                        role.isDeleted = true;
                         await _context.SaveChangesAsync();
                         return Ok(new Response { Status = 200, Message = "Xóa vai trò thành công!" });
                     }
@@ -202,6 +200,34 @@ namespace DoubleLStore.WebApp.Controllers
                
             }
             else return BadRequest(new Response { Status = 400, Message = "Xóa vai trò thất bại!" });
+
+        }
+        [HttpGet("search-role-by-name/{name}")]
+        public async Task<IActionResult> SearchRoleByNamr(string name)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+            
+            if (RoleId == "1")
+            {
+                var findrole = await _context.Roles.Where(s => s.Name.StartsWith(name.Trim()) && s.isDeleted==false).ToListAsync();
+                if(findrole.Count > 0) 
+                return Ok(new Response { Status = 200, Message = "Success", Data = findrole });
+                else return Ok(new Response { Status = 200, Message = "Không tìm thấy" });
+            }
+            else return BadRequest(new Response { Status = 400, Message = "Bạn không có quyền tìm kiếm " });
+
 
         }
 

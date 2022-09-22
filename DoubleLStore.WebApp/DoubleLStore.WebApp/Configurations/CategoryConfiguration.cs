@@ -9,7 +9,8 @@ namespace DoubleLStore.WebApp.Configurations
         public void Configure(EntityTypeBuilder<Categories> builder)
         {
             builder.ToTable("Categories");
-            builder.HasKey(x=>x.Id);    
+            builder.HasKey(x=>x.Id);
+            builder.Property(x => x.isDeleted).HasDefaultValue(false);
         }
     }
 }

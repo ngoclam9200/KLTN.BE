@@ -10,6 +10,7 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("Costs");
              builder.HasKey(x => x.Id); 
+
         }
     }
 }

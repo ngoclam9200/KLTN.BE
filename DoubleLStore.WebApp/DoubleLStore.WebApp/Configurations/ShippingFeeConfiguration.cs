@@ -11,6 +11,7 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("ShippingFees");
             builder.HasKey(x=>x.Id);
+            builder.Property(x => x.isDeleted).HasDefaultValue(false);
         }
     }
 }

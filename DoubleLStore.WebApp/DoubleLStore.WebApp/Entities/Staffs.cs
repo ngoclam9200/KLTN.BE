@@ -16,9 +16,13 @@ namespace DoubleLStore.WebApp.Entities
         public DateTime DateCreated { get; set; }
         public Roles Role { get; set; }
         public string Salary { get; set; }
-       
-     
- 
-         
+        public string Avatar { get; set; }
+        public string Gender    { get; set; }
+        public bool isDeleted { get; set; }
+        
+
+
+
+
     }
 }

@@ -9,5 +9,7 @@ namespace DoubleLStore.WebApp.Entities
         public string Url   { get; set; }
         public string ProductId     { get; set; }
         public Products Product { get; set; }
+        public bool isDefaut { get; set; }
+
     }
 }

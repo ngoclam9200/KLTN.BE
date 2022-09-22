@@ -11,11 +11,15 @@ namespace DoubleLStore.WebApp.Entities
         public string Description { get; set; }
         public double Price { get; set; }
         public double Originalprice { get; set; }
+        public int Count { get; set; }
         public int Stock { get; set; }
+
+
         public int Discount { get; set; }
         public string Image { get; set; }
         public DateTime DateCreated { get; set; }
         public Categories Category { get; set; }
-      
-     }
+        public bool isDeleted { get; set; }
+
+    }
 }
