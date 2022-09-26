@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Net.Mail;
 
 namespace DoubleLStore.WebApp.Controllers
 {
@@ -68,8 +70,8 @@ namespace DoubleLStore.WebApp.Controllers
 
             try
             {
-                if (!VerifyEmail(request.Email))
-                    return BadRequest(new Response { Status = 422, Message = "Email không hợp lệ" });
+                //if (!ValidateEmail(request.Email))
+                //    return BadRequest(new Response { Status = 422, Message = "Email không hợp lệ" });
 
                 Users user = new Users();
                 user.Username = request.Username;
@@ -81,21 +83,65 @@ namespace DoubleLStore.WebApp.Controllers
                 user.Phonenumber= request.Phonenumber;
                 user.Avatar = "https://img.thuthuatphanmem.vn/uploads/2018/09/22/avatar-trang-den-dep_015640236.png";
                 user.Gender = "";
+                user.IsVerify = false;
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
+                SendVerifyEmail(request.Email, request.Username, request.Fullname);
                 return Ok(new Response { Status = 200, Message = "Đăng kí thành công" });
-
-
             }
             catch (IndexOutOfRangeException e)
             {
                 return BadRequest(new Response { Status = 400, Message ="Đăng kí thất bại" });
-            }
-            
-
+            }          
         }
 
-        private bool VerifyEmail(string email)
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail(string hashBytes)
+        {
+            var userName = EncryptedOperation.DecryptedData(hashBytes);
+            var user = _context.Users.FirstOrDefault(x => x.Username == userName);
+            if (user == null)
+                return BadRequest("Invalid request");
+
+            user.IsVerify = true;
+            _context.SaveChanges();
+            return Ok("Verify successfully");
+        }
+
+        private void SendVerifyEmail(string email, string userName, string fullName)
+        {
+            //1. Api [POST] verify email
+            var link2Verify = $"https://{HttpContext.Request.Host.Value}/api/user/verify-email?hashBytes={EncryptedOperation.EncryptedData(userName)}";
+
+            //2. Service send email: google
+            var fromAddress = new MailAddress("nguyenvietlongcv@gmail.com", "Double.Store");
+            var toAddress = new MailAddress(email, fullName);
+            const string fromPassword = "tgmkrbzuldlxstpf";
+            const string subject = "Verify email";
+            string body = $@"Please click this link below to verify your email
+                            {link2Verify}";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+        }
+
+        private bool ValidateEmail(string email)
         {
             var expression = $@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
             return Regex.IsMatch(email, expression, RegexOptions.IgnoreCase);
@@ -242,6 +288,41 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Bạn không có quyền tìm kiếm " });
 
 
+        }
+    }
+
+    public class EncryptedOperation
+    {
+        public static string EncryptedData(string data)
+        {
+            string hashbytes = "";
+            for(int i = 2; i <data.Length; i++)
+            {
+                hashbytes += data[i];
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                hashbytes += data[i];
+            }
+            return hashbytes;
+        }
+
+        public static string DecryptedData(string hashBytes)
+        {
+            string data = "";
+            for(int i = hashBytes.Length - 2; i < hashBytes.Length; i++)
+            {
+                data += hashBytes[i];
+            }
+
+            for (int i = 0; i < hashBytes.Length - 2; i++)
+            {
+                data += hashBytes[i];
+            }
+
+
+
+            return data;
         }
     }
 }

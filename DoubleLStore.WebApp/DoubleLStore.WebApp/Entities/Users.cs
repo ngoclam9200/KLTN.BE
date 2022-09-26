@@ -18,6 +18,7 @@ namespace DoubleLStore.WebApp.Entities
         public string Avatar {get; set;}
         public string Gender { get; set;}
         public bool isDeleted { get; set; }
+        public bool IsVerify { get; set; }
 
     }
 }
