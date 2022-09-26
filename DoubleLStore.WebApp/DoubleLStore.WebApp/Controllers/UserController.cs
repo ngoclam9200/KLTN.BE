@@ -289,6 +289,18 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
+
+        [HttpPost("change-password")]
+
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var user = _context.Users.FirstOrDefault(x=>x.Username == request.Username);
+            if (user == null) return BadRequest(new Response { Status = 404, Message = "Tên đăng nhập không tìm thấy" });
+            if (user.Password != request.Password) return BadRequest(new Response { Status = 504, Message = "Sai mật khẩu" });
+            user.Password = request.NewPassword;
+            _context.SaveChanges();
+            return Ok(new Response { Status = 200, Message = "Đổi mật khẩu thành công" });
+        }
     }
 
     public class EncryptedOperation
