@@ -14,7 +14,7 @@ using System.Net.Mail;
 
 namespace DoubleLStore.WebApp.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -33,22 +33,22 @@ namespace DoubleLStore.WebApp.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
 
         {
-              
+
             var finduser = await _context.Users.Where(u => u.Username == request.username && u.Password == request.password).ToListAsync();
 
             if (finduser.Count == 0)
                 return BadRequest(new Response { Status = 400, Message = "Wrong username or password" });
 
             var token = _jwtAuthenticationManager.Authenticate(finduser[0]);
-           
+
             if (token == null)
                 return Unauthorized();
-          
+
             else
 
             {
-                return Ok(new Response { Status = 200, Message = "Login success", Data = token   });
-            } 
+                return Ok(new Response { Status = 200, Message = "Login success", Data = token });
+            }
 
         }
         [HttpPost("register-user")]
@@ -79,8 +79,8 @@ namespace DoubleLStore.WebApp.Controllers
                 user.RoleId = "3";
                 user.Email = request.Email;
                 user.Password = request.Password;
-                user.Fullname=request.Fullname;
-                user.Phonenumber= request.Phonenumber;
+                user.Fullname = request.Fullname;
+                user.Phonenumber = request.Phonenumber;
                 user.Avatar = "https://img.thuthuatphanmem.vn/uploads/2018/09/22/avatar-trang-den-dep_015640236.png";
                 user.Gender = "";
                 user.IsVerify = false;
@@ -92,21 +92,8 @@ namespace DoubleLStore.WebApp.Controllers
             }
             catch (IndexOutOfRangeException e)
             {
-                return BadRequest(new Response { Status = 400, Message ="Đăng kí thất bại" });
-            }          
-        }
-
-        [HttpGet("verify-email")]
-        public async Task<IActionResult> VerifyEmail(string hashBytes)
-        {
-            var userName = EncryptedOperation.DecryptedData(hashBytes);
-            var user = _context.Users.FirstOrDefault(x => x.Username == userName);
-            if (user == null)
-                return BadRequest("Invalid request");
-
-            user.IsVerify = true;
-            _context.SaveChanges();
-            return Ok("Verify successfully");
+                return BadRequest(new Response { Status = 400, Message = "Đăng kí thất bại" });
+            }
         }
 
         private void SendVerifyEmail(string email, string userName, string fullName)
@@ -141,6 +128,19 @@ namespace DoubleLStore.WebApp.Controllers
             }
         }
 
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail(string hashBytes)
+        {
+            var userName = EncryptedOperation.DecryptedData(hashBytes);
+            var user = _context.Users.FirstOrDefault(x => x.Username == userName);
+            if (user == null)
+                return BadRequest("Invalid request");
+
+            user.IsVerify = true;
+            _context.SaveChanges();
+            return Ok("Verify successfully");
+        }
+
         private bool ValidateEmail(string email)
         {
             var expression = $@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
@@ -168,7 +168,7 @@ namespace DoubleLStore.WebApp.Controllers
 
             if (RoleId == "1")
             {
-                var listuser = await _context.Users.Where(s=>s.isDeleted==false).ToListAsync();
+                var listuser = await _context.Users.Where(s => s.isDeleted == false).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = listuser });
             }
             else return BadRequest(new Response { Status = 400, Message = "Not found" });
@@ -178,7 +178,7 @@ namespace DoubleLStore.WebApp.Controllers
         [HttpPut("edit-user")]
         public async Task<IActionResult> EditRole([FromBody] EditUserRequest request)
         {
-            
+
 
 
             var finduser = await _context.Users.FindAsync(request.Id);
@@ -189,7 +189,7 @@ namespace DoubleLStore.WebApp.Controllers
 
             var checkusername = await _context.Users.Where(s => s.Username == request.Username && s.Id != request.Id).ToListAsync();
             var checkemail = await _context.Users.Where(s => s.Email == request.Email && s.Id != request.Id).ToListAsync();
-            
+
             if (checkusername.Count != 0)
             {
                 return BadRequest(new Response { Status = 400, Message = "Tên đăng nhập đã tồn tại, vui lòng thử tên khác" });
@@ -242,7 +242,7 @@ namespace DoubleLStore.WebApp.Controllers
 
                     try
                     {
-                       user.isDeleted = true;
+                        user.isDeleted = true;
                         await _context.SaveChangesAsync();
                         return Ok(new Response { Status = 200, Message = "Xóa khách hàng thành công!" });
                     }
@@ -278,7 +278,7 @@ namespace DoubleLStore.WebApp.Controllers
             }
             RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
 
-            if (RoleId == "1" || RoleId=="2")
+            if (RoleId == "1" || RoleId == "2")
             {
                 var finduser = await _context.Users.Where(s => (s.Fullname.StartsWith(nameoremail.Trim()) && s.isDeleted == false) || (s.Email.StartsWith(nameoremail.Trim()) && s.isDeleted == false)).ToListAsync();
                 if (finduser.Count > 0)
@@ -294,9 +294,93 @@ namespace DoubleLStore.WebApp.Controllers
 
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
         {
-            var user = _context.Users.FirstOrDefault(x=>x.Username == request.Username);
+            var user = _context.Users.FirstOrDefault(x => x.Username == request.Username);
             if (user == null) return BadRequest(new Response { Status = 404, Message = "Tên đăng nhập không tìm thấy" });
             if (user.Password != request.Password) return BadRequest(new Response { Status = 504, Message = "Sai mật khẩu" });
+            user.Password = request.NewPassword;
+            _context.SaveChanges();
+            return Ok(new Response { Status = 200, Message = "Đổi mật khẩu thành công" });
+        }
+
+        // Support for reset password
+        [HttpGet("get-otp")]
+        public async Task<ActionResult> GetOtp(string email)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Email == email);
+         
+            if (user == null)
+                return BadRequest(new Response { Status = 400, Message = "Không tìm thấy tài khoản" }); // complete self
+
+            var otp = GetRandom(4);
+
+            // save into database ? where ? create table
+            _context.Otps.Add(new Otp
+            {
+                Email = user.Email,
+                Code = otp,
+                DateCreated = DateTime.Now,
+                DateExpiration = DateTime.Now.AddMinutes(3)
+
+            });
+            SendOtp(user.Email, otp, user.Fullname);
+            _context.SaveChanges();
+            return Ok(new Response { Status = 200, Message = "Gửi thành công" }); // complete self
+        }
+
+        private void SendOtp(string email, string otp, string fullName)
+        {
+            var fromAddress = new MailAddress("nguyenvietlongcv@gmail.com", "Double.Store");
+            var toAddress = new MailAddress(email, fullName);
+            const string fromPassword = "tgmkrbzuldlxstpf";
+            const string subject = "OTP";
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = otp
+            })
+            {
+                smtp.Send(message);
+            }
+        }
+
+        private string GetRandom(int count)
+        {
+            string rs = "";
+            Random rnd = new Random();
+            for (var i = 0; i < count; i++)
+            {
+                rs += rnd.Next(0, 10).ToString();
+            }
+            return rs;
+        }
+
+        [HttpPost("reset-password")]
+
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPassword request)
+        {
+            if (!_context.Otps.Any(x => x.Email == request.Email))
+               return BadRequest(new Response { Status = 400, Message = "Email chưa yêu cầu OTP" });
+
+            // Need to get otp first: by [HttpGet("get-otp")]
+            var otp = _context.Otps.Where(x => x.Email  == request.Email && x.Code == request.OTP).OrderBy(x => x.DateCreated).LastOrDefault();
+            if (otp == null)
+                return BadRequest(new Response { Status = 400, Message = "Nhập sai OTP" }); // error: loi nhap sai otp
+
+            if (DateTime.Now > otp.DateExpiration)
+                return BadRequest(new Response { Status = 400, Message = "OTP hết hạn" });  // error: loi otp het han
+
+            var user = _context.Users.FirstOrDefault(x => x.Email == request.Email);
+            if (user == null)
+                return BadRequest(new Response { Status = 400, Message = "Không tìm thấy tài khoản" }); // error : khong tim thay
             user.Password = request.NewPassword;
             _context.SaveChanges();
             return Ok(new Response { Status = 200, Message = "Đổi mật khẩu thành công" });
@@ -308,7 +392,7 @@ namespace DoubleLStore.WebApp.Controllers
         public static string EncryptedData(string data)
         {
             string hashbytes = "";
-            for(int i = 2; i <data.Length; i++)
+            for (int i = 2; i < data.Length; i++)
             {
                 hashbytes += data[i];
             }
@@ -322,7 +406,7 @@ namespace DoubleLStore.WebApp.Controllers
         public static string DecryptedData(string hashBytes)
         {
             string data = "";
-            for(int i = hashBytes.Length - 2; i < hashBytes.Length; i++)
+            for (int i = hashBytes.Length - 2; i < hashBytes.Length; i++)
             {
                 data += hashBytes[i];
             }

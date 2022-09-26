@@ -8,7 +8,7 @@ namespace DoubleLStore.WebApp.EF
     {
         public doubleLStoreDbContext(DbContextOptions options) : base(options)
         {
-           
+         
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,8 @@ namespace DoubleLStore.WebApp.EF
         public DbSet<SalaryStaff> SalaryStaffs { get; set; }
         public DbSet<CostProduct> CostProducts { get; set; }
         public DbSet<ImageProduct> ImageProducts { get; set; }
+        public DbSet<Otp> Otps { get; set; }
+        
         public object HttpContext { get; internal set; }
     }
 }
