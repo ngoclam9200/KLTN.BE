@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.RegularExpressions;
 
 namespace DoubleLStore.WebApp.Controllers
 {
@@ -64,9 +65,13 @@ namespace DoubleLStore.WebApp.Controllers
             {
                 return BadRequest(new Response { Status = 400, Message = "Email đã tồn tại, vui lòng thử email khác" });
             }
+
             try
             {
-                Users  user = new Users();
+                if (!VerifyEmail(request.Email))
+                    return BadRequest(new Response { Status = 422, Message = "Email không hợp lệ" });
+
+                Users user = new Users();
                 user.Username = request.Username;
                 user.DateCreated = DateTime.Now;
                 user.RoleId = "3";
@@ -89,6 +94,13 @@ namespace DoubleLStore.WebApp.Controllers
             
 
         }
+
+        private bool VerifyEmail(string email)
+        {
+            var expression = $@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
+            return Regex.IsMatch(email, expression, RegexOptions.IgnoreCase);
+        }
+
         [HttpGet("get-all-user")]
         [Authorize]
         public async Task<IActionResult> GetAllCustomer()
