@@ -40,7 +40,7 @@ namespace DoubleLStore.WebApp.IService
                      new Claim("email", user.Email),
 
                 }),
-                Expires = DateTime.Now.AddHours(1),
+            
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
                 SecurityAlgorithms.HmacSha256Signature)
             };
@@ -48,7 +48,32 @@ namespace DoubleLStore.WebApp.IService
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+        public string Authenticate(Admin admin)
+        {
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenKey = Encoding.ASCII.GetBytes(key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+
+                    new Claim("id", admin.Id),
+                    new Claim("RoleId", admin.RoleId),
+                    new Claim("username", admin.Username),
+                    new Claim("Fullname", admin.Fullname),
+                    new Claim("phonenumber", admin.Phonenumber),
+                     new Claim("email", admin.Email),
+
+                }),
+                
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
+                SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
         public JwtSecurityToken GetInFo(string token)
         {
             var handler = new JwtSecurityTokenHandler();
@@ -83,7 +108,7 @@ namespace DoubleLStore.WebApp.IService
                      new Claim("email", user.Email),
 
                 }),
-                Expires = DateTime.Now.AddHours(1),
+               
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
                 SecurityAlgorithms.HmacSha256Signature)
             };
@@ -109,7 +134,7 @@ namespace DoubleLStore.WebApp.IService
                      new Claim("email", staff.Email),
 
                 }),
-                Expires = DateTime.Now.AddHours(1),
+               
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
                 SecurityAlgorithms.HmacSha256Signature)
             };

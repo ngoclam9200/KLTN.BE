@@ -48,7 +48,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("get-all-staff")]
-        [Authorize]
+        
         public async Task<IActionResult> GetAllStaff()
         {
             var RoleId = "";
@@ -117,12 +117,12 @@ namespace DoubleLStore.WebApp.Controllers
                 var currentMonth =DateTime.Now.Month.ToString();
                 var currentYear =DateTime.Now.Year.ToString();
                 salaryStaff.Month = currentMonth+ "/"+currentYear;
-                salaryStaff.NumberOfWorking = 1;
+                salaryStaff.NumberOfWorking = 0;
                 var currentDay=DateTime.Now.Day.ToString();
-                salaryStaff.ListDayWorking = currentDay;
-                int x = Int32.Parse(staff.Salary);
+                salaryStaff.ListDayWorking = "";
+                
                 salaryStaff.Salary = staff.Salary;
-                salaryStaff.SalaryOfThisMonth = (salaryStaff.NumberOfWorking * (x / 30)).ToString();
+                salaryStaff.SalaryOfThisMonth = "0";
                 _context.SalaryStaffs.Add(salaryStaff);
                 await _context.SaveChangesAsync();
 

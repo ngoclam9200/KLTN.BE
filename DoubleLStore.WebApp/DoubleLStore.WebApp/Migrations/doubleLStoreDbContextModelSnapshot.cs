@@ -32,9 +32,22 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DistrictID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProvinceID")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("WardCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isAddressDefaut")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("isDeleted")
                         .ValueGeneratedOnAdd()
@@ -46,6 +59,63 @@ namespace DoubleLStore.WebApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AddressUsers", (string)null);
+                });
+
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Admin", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phonenumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.AppConfig", b =>
@@ -67,6 +137,9 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ProductId")
                         .IsRequired()
@@ -119,6 +192,40 @@ namespace DoubleLStore.WebApp.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.ChatUser", b =>
+                {
+                    b.Property<string>("ChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DisplayPriority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isNewMessageAdmin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("isNewMessageUser")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("ChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatUsers", (string)null);
+                });
+
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.CostProduct", b =>
                 {
                     b.Property<string>("Id")
@@ -149,29 +256,27 @@ namespace DoubleLStore.WebApp.Migrations
                     b.ToTable("CostProduct", (string)null);
                 });
 
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Costs", b =>
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.CostVoucher", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Cost")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("StaffId")
+                    b.Property<string>("VoucherId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("VoucherId");
 
-                    b.HasIndex("StaffId");
-
-                    b.ToTable("Costs", (string)null);
+                    b.ToTable("CostVouchers", (string)null);
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.ImageProduct", b =>
@@ -200,6 +305,89 @@ namespace DoubleLStore.WebApp.Migrations
                     b.ToTable("ImageProducts", (string)null);
                 });
 
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.InfoShop", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DistrictID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phonenumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinceID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WardCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InfoShop", (string)null);
+                });
+
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Notifi", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifi", (string)null);
+                });
+
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.OrderDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails", (string)null);
+                });
+
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.Orders", b =>
                 {
                     b.Property<string>("Id")
@@ -210,6 +398,10 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -217,12 +409,11 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ShippingFeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.Property<double>("ShippingFeePrice")
-                        .HasColumnType("float");
+                    b.Property<int>("ShippingFee")
+                        .HasColumnType("int");
 
                     b.Property<string>("StatusOrderId")
                         .IsRequired()
@@ -243,9 +434,13 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("isPaid")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("ShippingFeeId");
+                    b.Property<bool>("isPaymentOnline")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("StatusOrderId");
 
@@ -350,7 +545,7 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Property<int>("NumberOfWorking")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Salary")
                         .IsRequired()
@@ -372,31 +567,6 @@ namespace DoubleLStore.WebApp.Migrations
                     b.HasIndex("StaffId");
 
                     b.ToTable("SalaryStaff", (string)null);
-                });
-
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.ShippingFees", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Distance")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShippingFees");
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.Staffs", b =>
@@ -554,6 +724,11 @@ namespace DoubleLStore.WebApp.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("isVerify")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
@@ -566,6 +741,12 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AmountInput")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountRemaining")
+                        .HasColumnType("int");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -604,6 +785,17 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Admin", b =>
+                {
+                    b.HasOne("DoubleLStore.WebApp.Entities.Roles", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.Carts", b =>
                 {
                     b.HasOne("DoubleLStore.WebApp.Entities.Products", "Product")
@@ -623,6 +815,17 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.ChatUser", b =>
+                {
+                    b.HasOne("DoubleLStore.WebApp.Entities.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.CostProduct", b =>
                 {
                     b.HasOne("DoubleLStore.WebApp.Entities.Products", "Product")
@@ -634,23 +837,15 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Costs", b =>
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.CostVoucher", b =>
                 {
-                    b.HasOne("DoubleLStore.WebApp.Entities.Products", "Product")
+                    b.HasOne("DoubleLStore.WebApp.Entities.Vouchers", "Voucher")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("VoucherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DoubleLStore.WebApp.Entities.Staffs", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Staff");
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.ImageProduct", b =>
@@ -664,14 +859,38 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Orders", b =>
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Notifi", b =>
                 {
-                    b.HasOne("DoubleLStore.WebApp.Entities.ShippingFees", "ShippingFee")
+                    b.HasOne("DoubleLStore.WebApp.Entities.Users", "User")
                         .WithMany()
-                        .HasForeignKey("ShippingFeeId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("DoubleLStore.WebApp.Entities.Orders", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoubleLStore.WebApp.Entities.Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DoubleLStore.WebApp.Entities.Orders", b =>
+                {
                     b.HasOne("DoubleLStore.WebApp.Entities.StatusOrders", "StatusOrder")
                         .WithMany()
                         .HasForeignKey("StatusOrderId")
@@ -695,8 +914,6 @@ namespace DoubleLStore.WebApp.Migrations
                         .HasForeignKey("VoucherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ShippingFee");
 
                     b.Navigation("StatusOrder");
 

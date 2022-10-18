@@ -23,32 +23,28 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("get-all-product")]
-        [Authorize]
+        
         public async Task<IActionResult> GetAllProduct()
         {
-            var RoleId = "";
-            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
-            JwtSecurityToken token = null;
-            try
-            {
-                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
-
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
-            }
-            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
-
-
-            if (RoleId == "1" || RoleId == "2")
-            {
+            
                 var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
-            }
-            else return BadRequest(new Response { Status = 400, Message = "Not found" });
+             
 
         }
+        [HttpGet("get-lastest-product")]
+
+        public async Task<IActionResult> GetLastestProduct()
+        {
+            
+                var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
+                listproduct=listproduct.GetRange(0, 6);
+                return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
+          
+
+        }
+
+
 
         [HttpPost("create-product")]
 
@@ -110,7 +106,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [Authorize]
         [HttpPut("edit-product")]
-        public async Task<IActionResult> EditRole([FromBody] EditProductRequest request)
+        public async Task<IActionResult> EditProduct([FromBody] EditProductRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -228,6 +224,164 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
+        [HttpPost("add-image-product")]
+
+        public async Task<IActionResult> AddImageProduct(AddImageProductRequest request)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+
+
+
+            if (RoleId == "1" || RoleId == "2")
+            {
+                
+                ImageProduct imageproduct = new ImageProduct();
+                imageproduct.ProductId = request.ProductId;
+                imageproduct.Url = request.Url;
+                imageproduct.isDefaut = false;
+                _context.ImageProducts.Add(imageproduct);
+
+                await _context.SaveChangesAsync();
+                return Ok(new Response { Status = 200, Message = "Thêm ảnh sản phẩm  thành công" });
+            }
+            else return BadRequest(new Response { Status = 400, Message = "Thêm  sản phẩm  thất bại" });
+
+        }
+        [HttpPut("change-image-product")]
+         
+        public async Task<IActionResult> ChangeImageProduct([FromBody] ChangeImageProductRequest request)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+            if (RoleId != "1" && RoleId != "2")
+                return BadRequest(new Response { Status = 400, Message = "Không có quyền!, vui lòng đăng nhập với tài khoản admin hoặc nhân viên" });
+
+
+            var findimage = await _context.ImageProducts.FindAsync(request.Id);
+            if (findimage == null)
+            {
+                return NotFound(new Response { Status = 404, Message = "Ảnh  không tồn tại" });
+            }
+
+
+            try
+            { if(findimage.isDefaut==true)
+                {
+                    findimage.Url = request.Url;
+                    var findproduct = await _context.Products.FindAsync(request.ProductId);
+                    findproduct.Image = request.Url;
+                }   
+            else
+                {
+                    findimage.Url = request.Url;
+ 
+                }    
+             
+
+                await _context.SaveChangesAsync();
+
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = e.ToString() });
+            }
+            return Ok(new Response { Status = 200, Message = "Sản phẩm đã được chỉnh sửa", Data = request });
+        }
+
+        [HttpGet("get-all-image-by-id/{id}")]
+        public async Task<IActionResult> GetAllImageById(string id)
+        {
+            
+                var findimage = await _context.ImageProducts.Where(s => s.ProductId==id).ToListAsync();
+                if (findimage.Count > 0)
+                    return Ok(new Response { Status = 200, Message = "Success", Data = findimage });
+                else return Ok(new Response { Status = 200, Message = "Không tìm thấy" });
+            
+
+
+        }
+        [HttpGet("get-product-by-id/{id}")]
+    
+        public async Task<IActionResult> GetProductById(string id)
+        {
+            
+
+                var prod = await _context.Products.FindAsync(id);
+                if (prod != null)
+                {
+
+                    try
+                    {
+                        
+                        return Ok(new Response { Status = 200, Message = "Lấy sản phẩm thành công!" , Data= prod});
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return BadRequest(new Response { Status = 400, Message = e.ToString() });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new Response { Status = 400, Message = "Not found" });
+                }
+
+
+            
+
+        }
+        [HttpGet("get-product-by-cateid/{id}")]
+
+        public async Task<IActionResult> GetProductByCateId(string id)
+        {
+           
+
+                var prod = await _context.Products.Where(p => p.CategoryId == id).ToListAsync();
+                if (prod != null)
+                {
+
+                    try
+                    {
+
+                        return Ok(new Response { Status = 200, Message = "Lấy sản phẩm thành công!", Data = prod });
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return BadRequest(new Response { Status = 400, Message = e.ToString() });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new Response { Status = 400, Message = "Not found" });
+                }
+
+
+            
+
+        }
+
 
 
     }

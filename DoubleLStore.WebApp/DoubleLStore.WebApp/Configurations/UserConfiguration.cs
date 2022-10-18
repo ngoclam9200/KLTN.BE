@@ -14,6 +14,7 @@ namespace DoubleLStore.WebApp.Configurations
             builder.Property(x => x.Avatar).HasDefaultValue("");
             builder.Property(x => x.Gender).HasDefaultValue("");
             builder.Property(x => x.isDeleted).HasDefaultValue(false);
+            builder.Property(x => x.isVerify).HasDefaultValue(false);
 
 
         }

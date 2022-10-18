@@ -7,6 +7,7 @@ namespace DoubleLStore.WebApp.IService
     {
        public string Authenticate(Users user);
         public string Authenticate(Staffs staff);
+        public string Authenticate(Admin admin);
         public  string TokenResetPassword(Users user);
         public JwtSecurityToken GetInFo(string token);
     }

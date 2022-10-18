@@ -25,9 +25,15 @@ namespace DoubleLStore.WebApp.EF
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
             modelBuilder.ApplyConfiguration(new StatusOrderConfiguration());
             modelBuilder.ApplyConfiguration(new ImageProductConfiguration());
-            modelBuilder.ApplyConfiguration(new CostConfiguration());
+            modelBuilder.ApplyConfiguration(new CostVoucherConfiguration());
             modelBuilder.ApplyConfiguration(new SalaryStaffConfiguration());
             modelBuilder.ApplyConfiguration(new CostProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ChatUserConfiguration());
+            modelBuilder.ApplyConfiguration(new AdminConfiguration());
+            modelBuilder.ApplyConfiguration(new InfoShopConfiguration());
+            modelBuilder.ApplyConfiguration(new NotifiConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+
 
             base.OnModelCreating(modelBuilder);    
         }
@@ -39,13 +45,18 @@ namespace DoubleLStore.WebApp.EF
         public DbSet<Categories> Categories { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Products> Products { get; set; }
-        public DbSet<ShippingFees> ShippingFees { get; set; }
-        public DbSet<StatusOrders> StatusOrders { get; set; }
+         public DbSet<StatusOrders> StatusOrders { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Vouchers> Vouchers { get; set; }
         public DbSet<SalaryStaff> SalaryStaffs { get; set; }
         public DbSet<CostProduct> CostProducts { get; set; }
         public DbSet<ImageProduct> ImageProducts { get; set; }
+       public DbSet<ChatUser> ChatUsers { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<InfoShop> InfoShops { get; set; }
+        public DbSet<Notifi> Notifis { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<CostVoucher> CostVouchers { get; set; }
         public object HttpContext { get; internal set; }
     }
 }

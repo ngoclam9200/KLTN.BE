@@ -10,6 +10,7 @@ namespace DoubleLStore.WebApp.Entities
         public int Quantity { get; set; }
         public string UserId { get; set; }
         public Users User { get; set; }
-        public Products Product { get; set; }  
+        public Products Product { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

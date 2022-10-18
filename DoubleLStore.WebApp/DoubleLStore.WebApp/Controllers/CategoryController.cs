@@ -25,30 +25,13 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         [HttpGet("get-all-category")]
-        [Authorize]
+     
         public async Task<IActionResult> GetAllCategory()
         {
-            var RoleId = "";
-            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
-            JwtSecurityToken token = null;
-            try
-            {
-                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
-
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
-            }
-            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
-
-
-            if (RoleId == "1" || RoleId == "2")
-            {
+           
                 var listcategory = await _context.Categories.Where(x => x.isDeleted == false).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = listcategory });
-            }
-            else return BadRequest(new Response { Status = 400, Message = "Not found" });
+           
 
         }
          

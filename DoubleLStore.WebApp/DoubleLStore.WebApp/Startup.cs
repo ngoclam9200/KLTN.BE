@@ -1,5 +1,6 @@
 ﻿using DoubleLStore.WebApp.EF;
 using DoubleLStore.WebApp.IService;
+using DoubleLStore.WebApp.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +21,8 @@ namespace DoubleLStore.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, MailService>();
             //services.AddTransient<IJwtAuthenticationManager, JwtAuthenticationManager>();
             services.AddDbContext<doubleLStoreDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DoubelLStoreDb")));

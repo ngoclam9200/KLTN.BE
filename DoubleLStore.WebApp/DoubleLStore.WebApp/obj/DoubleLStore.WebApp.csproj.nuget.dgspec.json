@@ -43,6 +43,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.4.1, )"
+            },
             "Microsoft.AspNetCore.Authentication": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -74,6 +82,26 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "PayPal": {
+              "target": "Package",
+              "version": "[2.0.0-rc2, )"
+            },
+            "Sek.Module.Payment.VnPay.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Sek.Module.Payment.VnPay.Common": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Sek.Module.Payment.VnPay.Core": {
+              "target": "Package",
+              "version": "[1.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

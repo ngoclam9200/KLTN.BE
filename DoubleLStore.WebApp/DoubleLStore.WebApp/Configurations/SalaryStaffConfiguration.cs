@@ -10,7 +10,7 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("SalaryStaff");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.NumberOfWorking).HasDefaultValue(1);
+            builder.Property(x => x.NumberOfWorking).HasDefaultValue(0);
         }
     
     }

@@ -12,5 +12,7 @@ namespace DoubleLStore.WebApp.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateExpiration { get; set; }
         public bool isDeleted { get; set; }
+        public int AmountInput { get; set; }
+        public int AmountRemaining { get; set; }
     }
 }

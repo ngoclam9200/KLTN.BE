@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DoubleLStore.WebApp.Configurations
 {
-    public class CostConfiguration : IEntityTypeConfiguration<Costs>
+    public class CostVoucherConfiguration : IEntityTypeConfiguration<CostVoucher>
     {
-        public void Configure(EntityTypeBuilder<Costs> builder)
+        public void Configure(EntityTypeBuilder<CostVoucher> builder)
         {
-            builder.ToTable("Costs");
+            builder.ToTable("CostVouchers");
              builder.HasKey(x => x.Id); 
 
         }
