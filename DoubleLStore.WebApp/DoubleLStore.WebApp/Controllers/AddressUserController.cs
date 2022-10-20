@@ -57,7 +57,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpGet("get-address-default/{userid}")]
        
-        public async Task<IActionResult> GetAllAddressDefaultByUserId(string userid)
+        public async Task<IActionResult> GetAddressDefaultByUserId(string userid)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -88,7 +88,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpPost("create-address")]
 
-        public async Task<IActionResult> CreateCategory(CreateAddressUserRequest request)
+        public async Task<IActionResult> CreateAddress(CreateAddressUserRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

@@ -25,7 +25,7 @@ namespace DoubleLStore.WebApp.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         private readonly IConfiguration _configuration;
-        public double TyGiaUSD = 23300;
+ 
       
         public OrderController(doubleLStoreDbContext context, IConfiguration config, IJwtAuthenticationManager jwtAuthenticationManager)
         {

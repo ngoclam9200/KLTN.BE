@@ -23,7 +23,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpPost("login-admin")]
 
-        public async Task<IActionResult> LoginStaff([FromBody] LoginAdminRequest request)
+        public async Task<IActionResult> LoginAdmin([FromBody] LoginAdminRequest request)
 
         {
 

@@ -300,7 +300,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("search-customer-by-name/{nameoremail}")]
-        public async Task<IActionResult> SearchUserByName(string nameoremail)
+        public async Task<IActionResult> SearchUserByNameOrEmail(string nameoremail)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -327,44 +327,44 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
-        [HttpPost("sendEmailResetPassword")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GuiEmailKhoiPhucMatKhau([FromBody] RequestSendEmaiResetPassword request)
-        {
-            if (String.IsNullOrEmpty(request.url))
-                return BadRequest(new Response { Status = 400, Message = "Thiếu đường dẫn tới trang Khôi phục mật khẩu!" });
+        //[HttpPost("sendEmailResetPassword")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GuiEmailKhoiPhucMatKhau([FromBody] RequestSendEmaiResetPassword request)
+        //{
+        //    if (String.IsNullOrEmpty(request.url))
+        //        return BadRequest(new Response { Status = 400, Message = "Thiếu đường dẫn tới trang Khôi phục mật khẩu!" });
            
-            var finduser = await _context.Users.Where(u => u.Email == request.email).ToListAsync();
-            if (finduser.Count == 0)
-                return BadRequest(new Response { Status = 400, Message = "Email chưa đăng ký trong hệ thống!" });
+        //    var finduser = await _context.Users.Where(u => u.Email == request.email).ToListAsync();
+        //    if (finduser.Count == 0)
+        //        return BadRequest(new Response { Status = 400, Message = "Email chưa đăng ký trong hệ thống!" });
            
             
-            var token = _jwtAuthenticationManager.TokenResetPassword(finduser[0]);
-            if (token == null)
-                return Unauthorized();
-            var message = new MailRequest();
-            message.Subject = "Khôi phục mật khẩu";
-            message.ToEmail = request.email;
-            message.Body = $"Xin chào {finduser[0].Fullname}." +
-                "<br/>" +
-                "Chúng tôi nhận được yêu cầu khôi phục mật khẩu từ bạn. Vui lòng nhấp vào link sau để khôi phục mật khẩu:" + $"{request.url}?token={token}" +
-                "<br/>" +
-                "Yêu cầu khôi phục mật khẩu có hiệu lực trong 5 phút" + "<br/>" +
-                     //"<button style='color: #f33f3f;'> Verify</button>"
-                     "<a style='background-color:black;border:none;color:white;padding:10px 32px;text-align:center;text-decoration:none;display:inline-block;font-size:16px;border-radius:25px;'" + "href =" + "http://localhost:4200/verify-email/" + $"?token={token}" + "> Verify</a>"
+        //    var token = _jwtAuthenticationManager.TokenResetPassword(finduser[0]);
+        //    if (token == null)
+        //        return Unauthorized();
+        //    var message = new MailRequest();
+        //    message.Subject = "Khôi phục mật khẩu";
+        //    message.ToEmail = request.email;
+        //    message.Body = $"Xin chào {finduser[0].Fullname}." +
+        //        "<br/>" +
+        //        "Chúng tôi nhận được yêu cầu khôi phục mật khẩu từ bạn. Vui lòng nhấp vào link sau để khôi phục mật khẩu:" + $"{request.url}?token={token}" +
+        //        "<br/>" +
+        //        "Yêu cầu khôi phục mật khẩu có hiệu lực trong 5 phút" + "<br/>" +
+        //             //"<button style='color: #f33f3f;'> Verify</button>"
+        //             "<a style='background-color:black;border:none;color:white;padding:10px 32px;text-align:center;text-decoration:none;display:inline-block;font-size:16px;border-radius:25px;'" + "href =" + "http://localhost:4200/verify-email/" + $"?token={token}" + "> Verify</a>"
 
-               ;
-            try
-            {
-                await _mailService.SendEmailAsync(message);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        //       ;
+        //    try
+        //    {
+        //        await _mailService.SendEmailAsync(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
 
-            return Ok(new Response { Status = 200, Message = "Gửi yêu cầu thành công, vui lòng kiểm tra email" });
-        }
+        //    return Ok(new Response { Status = 200, Message = "Gửi yêu cầu thành công, vui lòng kiểm tra email" });
+        //}
         [HttpPost("forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPassword request)

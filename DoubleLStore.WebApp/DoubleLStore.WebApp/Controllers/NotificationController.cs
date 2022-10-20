@@ -21,7 +21,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpGet("get-all-notification/{userid}")]
 
-        public async Task<IActionResult> GetAllOrderWaitConfirm(string userid)
+        public async Task<IActionResult> GetAllNotification(string userid)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

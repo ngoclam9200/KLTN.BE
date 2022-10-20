@@ -75,7 +75,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpPost("register-staff")]
 
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterStaffRequest request)
+        public async Task<IActionResult> RegisterStaff([FromBody] RegisterStaffRequest request)
 
         {
             if (request is null)
@@ -140,7 +140,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [Authorize]
         [HttpPut("edit-staff")]
-        public async Task<IActionResult> EditRole([FromBody] EditStaffRequest request)
+        public async Task<IActionResult> EditStaff([FromBody] EditStaffRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -239,7 +239,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("search-staff-by-nameoremail/{nameoremail}")]
-        public async Task<IActionResult> SearchStaffByNamr(string nameoremail)
+        public async Task<IActionResult> SearchStaffByNameOrEmail(string nameoremail)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

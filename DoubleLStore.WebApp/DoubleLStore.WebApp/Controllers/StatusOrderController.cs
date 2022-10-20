@@ -20,7 +20,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpGet("get-all-statusorder")]
         
-        public async Task<IActionResult> GetAllAddreByUserId()
+        public async Task<IActionResult> GetAddStatusOrder()
         {
             
                 var liststatus = await _context.StatusOrders.ToListAsync();

@@ -73,7 +73,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [Authorize]
         [HttpPut("edit-category")]
-        public async Task<IActionResult> EditRole([FromBody] EditCategoryRequest request)
+        public async Task<IActionResult> EditCategory([FromBody] EditCategoryRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -120,7 +120,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpDelete("delete-category/{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteRole(string id)
+        public async Task<IActionResult> DeleteCategory(string id)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -165,7 +165,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("search-category-by-name/{name}")]
-        public async Task<IActionResult> SearchRoleByNamr(string name)
+        public async Task<IActionResult> SearchCategoryByName(string name)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

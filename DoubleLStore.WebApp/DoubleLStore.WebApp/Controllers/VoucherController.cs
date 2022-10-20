@@ -91,7 +91,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [Authorize]
         [HttpPut("edit-voucher")]
-        public async Task<IActionResult> EditRole([FromBody] EditVoucherRequest request)
+        public async Task<IActionResult> EditVoucher([FromBody] EditVoucherRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -179,7 +179,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("search-voucher-by-code/{code}")]
-        public async Task<IActionResult> SearchVoicherByCode(string code)
+        public async Task<IActionResult> SearchVoucherByCode(string code)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

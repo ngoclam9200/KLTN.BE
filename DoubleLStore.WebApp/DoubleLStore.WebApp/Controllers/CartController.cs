@@ -215,7 +215,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         [HttpPost("create-cart")]
 
-        public async Task<IActionResult> CreateCategory(CreateCartRequest request)
+        public async Task<IActionResult> CreateCart(CreateCartRequest request)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
@@ -260,7 +260,7 @@ namespace DoubleLStore.WebApp.Controllers
         }
         [HttpDelete("delete-cart/{id}")]
         
-        public async Task<IActionResult> DeleteRole(string id)
+        public async Task<IActionResult> DeleteCart(string id)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);

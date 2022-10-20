@@ -26,7 +26,7 @@ namespace DoubleLStore.WebApp.Controllers
       
       
         [HttpGet("get-all-roles")]
-        [Authorize]
+          
         public async Task<IActionResult> GetAllRole()
         {
             var RoleId = "";
@@ -53,7 +53,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("get-role-by-id")]
-        [Authorize]
+      
         public async Task<IActionResult> GetRoleById()
         {
             var RoleId = "";
@@ -203,7 +203,7 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
         [HttpGet("search-role-by-name/{name}")]
-        public async Task<IActionResult> SearchRoleByNamr(string name)
+        public async Task<IActionResult> SearchRoleByName(string name)
         {
             var RoleId = "";
             Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
