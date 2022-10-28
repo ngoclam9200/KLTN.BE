@@ -110,7 +110,7 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Thêm vai trò thất bại" });
 
         }
-        [Authorize]
+      
         [HttpPut("edit-role-name")]
         public async Task<IActionResult> EditRole([FromBody] RoleModel request)
         {
@@ -157,7 +157,7 @@ namespace DoubleLStore.WebApp.Controllers
             return Ok(new Response { Status = 200, Message = "Vai trò đã được chỉnh sửa", Data = request });
         }
         [HttpDelete("delete-role/{id}")]
-        [Authorize]
+      
         public async Task<IActionResult> DeleteRole(string id)
         {
             var RoleId = "";

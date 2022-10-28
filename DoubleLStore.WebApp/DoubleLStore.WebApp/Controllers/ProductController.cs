@@ -38,7 +38,7 @@ namespace DoubleLStore.WebApp.Controllers
         {
             
                 var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
-                listproduct=listproduct.GetRange(0, 6);
+                listproduct=listproduct.GetRange(0, 3);
                 return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
           
 

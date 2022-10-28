@@ -98,7 +98,13 @@ namespace DoubleLStore.WebApp.Controllers
             try
             {
                 findsalarystaff.NumberOfWorking += 1;
-                findsalarystaff.ListDayWorking = findsalarystaff.ListDayWorking + ","+request.ListDayWorking;
+                if(findsalarystaff.ListDayWorking =="")
+                {
+                    findsalarystaff.ListDayWorking =request.ListDayWorking;
+
+                }
+                else findsalarystaff.ListDayWorking = findsalarystaff.ListDayWorking + "," + request.ListDayWorking;
+
                 int x = Int32.Parse(findsalarystaff.Salary);
                 int y = Int32.Parse(findsalarystaff.SalaryOfThisMonth);
                 y = y + x / 30;

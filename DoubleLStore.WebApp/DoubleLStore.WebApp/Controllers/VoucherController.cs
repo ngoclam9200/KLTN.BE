@@ -25,7 +25,7 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         [HttpGet("get-all-voucher")]
-        [Authorize]
+        
         public async Task<IActionResult> GetAllVoucher()
         {
             var RoleId = "";
@@ -89,7 +89,7 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Thêm voucher  thất bại" });
 
         }
-        [Authorize]
+        
         [HttpPut("edit-voucher")]
         public async Task<IActionResult> EditVoucher([FromBody] EditVoucherRequest request)
         {
@@ -133,7 +133,7 @@ namespace DoubleLStore.WebApp.Controllers
             return Ok(new Response { Status = 200, Message = "Voucher đã được chỉnh sửa", Data = request });
         }
         [HttpDelete("delete-voucher/{id}")]
-        [Authorize]
+     
         public async Task<IActionResult> DeleteVoucher(string id)
         {
             var RoleId = "";
