@@ -38,8 +38,9 @@ namespace DoubleLStore.WebApp.Controllers
         {
             
                 var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
-                listproduct=listproduct.GetRange(0, 3);
-                return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
+            if (listproduct.Count > 3) listproduct = listproduct.GetRange(0, 3);
+            
+            return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
           
 
         }
@@ -104,7 +105,7 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Thêm  sản phẩm  thất bại" });
 
         }
-        [Authorize]
+       
         [HttpPut("edit-product")]
         public async Task<IActionResult> EditProduct([FromBody] EditProductRequest request)
         {
@@ -151,7 +152,7 @@ namespace DoubleLStore.WebApp.Controllers
             return Ok(new Response { Status = 200, Message = "Sản phẩm đã được chỉnh sửa", Data = request });
         }
         [HttpDelete("delete-product/{id}")]
-        [Authorize]
+     
         public async Task<IActionResult> DeleteProduct(string id)
         {
             var RoleId = "";
@@ -358,7 +359,7 @@ namespace DoubleLStore.WebApp.Controllers
         {
            
 
-                var prod = await _context.Products.Where(p => p.CategoryId == id).ToListAsync();
+                var prod = await _context.Products.Where(p => p.CategoryId == id && p.isDeleted==false).ToListAsync();
                 if (prod != null)
                 {
 

@@ -118,8 +118,7 @@ namespace DoubleLStore.WebApp.Controllers
            
             try
             {
-                findvoucher.Discountfreeship = request.Discountfreeship;
-                findvoucher.Discountprice = request.Discountprice;
+                
                 findvoucher.DateExpiration = request.DateExpiration;
             
                 await _context.SaveChangesAsync();

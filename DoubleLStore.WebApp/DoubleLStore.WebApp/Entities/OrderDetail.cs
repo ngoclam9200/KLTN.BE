@@ -11,5 +11,10 @@ namespace DoubleLStore.WebApp.Entities
         public string ProductId { get; set; }
         public Products Product { get; set; }
         public int ProductCount { get; set; }
+
+     
+        public double PriceProduct { get; set; }
+        public double DiscountProduct { get; set; }
+
     }
 }

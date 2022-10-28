@@ -101,11 +101,14 @@ namespace DoubleLStore.WebApp.Controllers
                 _context.Orders.Add(order);
                 for (int i = 0; i < request.ListProduct.Count; i++)
                 {
-                     
+                    var findprod= await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.ProductId = request.ListProduct[i].ProductId;
                     orderDetail.OrderId = order.Id;
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
+                    orderDetail.PriceProduct = findprod.Price;
+                    orderDetail.DiscountProduct = findprod.Discount;
+                    
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);

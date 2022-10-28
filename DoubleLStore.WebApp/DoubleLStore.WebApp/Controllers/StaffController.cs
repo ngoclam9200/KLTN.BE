@@ -27,24 +27,29 @@ namespace DoubleLStore.WebApp.Controllers
 
         public async Task<IActionResult> LoginStaff([FromBody] LoginStaffRequest request)
 
-        {
+        { 
 
             var finduser = await _context.Staffs.Where(u => u.Username == request.username && u.Password == request.password).ToListAsync();
-
-            if (finduser.Count == 0)
-                return BadRequest(new Response { Status = 400, Message = "Sai mật khẩu hoặc tài khoản" });
-
-            var token = _jwtAuthenticationManager.Authenticate(finduser[0]);
-
-            if (token == null)
-                return Unauthorized();
-
+            var findrole = await _context.Roles.Where(u => u.isDeleted == true && u.Id==finduser[0].RoleId).ToListAsync();
+            if(findrole.Count!=0) return BadRequest(new Response { Status = 400, Message = "Vai trò nhân viên không tồn tại" });
             else
-
             {
-                return Ok(new Response { Status = 200, Message = "Login success", Data = token });
+                if (finduser.Count == 0)
+                    return BadRequest(new Response { Status = 400, Message = "Sai mật khẩu hoặc tài khoản" });
+
+                var token = _jwtAuthenticationManager.Authenticate(finduser[0]);
+
+                if (token == null)
+                    return Unauthorized();
+
+                else
+
+                {
+                    return Ok(new Response { Status = 200, Message = "Đăng nhập thành công", Data = token });
+                }
+                return Ok();
             }
-            return Ok();
+           
 
         }
         [HttpGet("get-all-staff")]
@@ -106,7 +111,7 @@ namespace DoubleLStore.WebApp.Controllers
                 staff.Fullname = request.Fullname;
                 staff.Phonenumber = request.Phonenumber;
                 staff.Salary= request.Salary;
-                staff.Avatar = "https://img-cache.coccoc.com/image2?i=3&l=37/815452733";
+                staff.Avatar = "https://image.spreadshirtmedia.net/image-server/v1/mp/products/T1459A839PA4459PT28D115912348W9895H10000/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/staff-sticker.jpg";
                 staff.Gender =request.Gender;
                 _context.Staffs.Add(staff);
                 //await _context.SaveChangesAsync();

@@ -4,6 +4,7 @@ using DoubleLStore.WebApp.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoubleLStore.WebApp.Migrations
 {
     [DbContext(typeof(doubleLStoreDbContext))]
-    partial class doubleLStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028100037_orderdetailtb")]
+    partial class orderdetailtb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -370,6 +372,9 @@ namespace DoubleLStore.WebApp.Migrations
 
                     b.Property<double>("DiscountProduct")
                         .HasColumnType("float");
+
+                    b.Property<int>("DiscountVoucher")
+                        .HasColumnType("int");
 
                     b.Property<string>("OrderId")
                         .IsRequired()
