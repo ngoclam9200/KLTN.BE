@@ -4,6 +4,7 @@ using DoubleLStore.WebApp.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoubleLStore.WebApp.Migrations
 {
     [DbContext(typeof(doubleLStoreDbContext))]
-    partial class doubleLStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110223012_updchat")]
+    partial class updchat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

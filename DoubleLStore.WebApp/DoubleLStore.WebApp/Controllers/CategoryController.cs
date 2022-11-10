@@ -71,7 +71,7 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Thêm loại sản phẩm  thất bại" });
 
         }
-        [Authorize]
+        
         [HttpPut("edit-category")]
         public async Task<IActionResult> EditCategory([FromBody] EditCategoryRequest request)
         {
@@ -119,7 +119,7 @@ namespace DoubleLStore.WebApp.Controllers
             return Ok(new Response { Status = 200, Message = "Loại sản phẩm đã được chỉnh sửa", Data = request });
         }
         [HttpDelete("delete-category/{id}")]
-        [Authorize]
+       
         public async Task<IActionResult> DeleteCategory(string id)
         {
             var RoleId = "";

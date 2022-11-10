@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
-
+using PusherServer;
+using DoubleLStore.WebApp.Entities;
 namespace DoubleLStore.WebApp.Controllers
 {
     [Route("api/[controller]")]
@@ -64,11 +65,12 @@ namespace DoubleLStore.WebApp.Controllers
         }
 
 
-        [HttpPut("send-message")]
-        public async Task<IActionResult> SendMassage([FromBody] SendMessageRequest request)
-        {
-            
 
+        [HttpPut("send-message")]
+        public async Task<IActionResult> AdminSendMassage([FromBody] SendMessageRequest request)
+        {
+
+           
             var findmesage= await _context.ChatUsers.FindAsync(request.Id);
             var allMess = await _context.ChatUsers.ToListAsync();
             if (findmesage == null)
@@ -120,6 +122,35 @@ namespace DoubleLStore.WebApp.Controllers
                 }
 
                 await _context.SaveChangesAsync();
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
+
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+                if (request.isAdmin == true)
+                {
+                    var result = await pusher.TriggerAsync(
+                  "my-channel",
+                  "my-event",
+                  new { message = "admin" + "," + DateTime.Now + "," + request.Message ,
+                  chatId=request.Id});
+                }    
+                else
+                {
+                  var result = await pusher.TriggerAsync(
+                 "my-channel",
+                 "my-event",
+                 new { message = "user" + "," + DateTime.Now + "," + request.Message,
+                     chatId = request.Id
+                 });
+                }    
+                   
 
 
             }
@@ -128,6 +159,63 @@ namespace DoubleLStore.WebApp.Controllers
                 return BadRequest(new Response { Status = 400, Message = e.ToString() });
             }
             return Ok(new Response { Status = 200, Message = "Tin nhắn đã được gơi", Data = request });
+        }
+        [HttpGet("get-message-by-userid/{id}")]
+
+        public async Task<IActionResult> GetMessageByUserId(string id)
+        {
+
+            var listmes = await _context.ChatUsers.Where(x=>x.UserId==id).ToListAsync();
+            var allMess = await _context.ChatUsers.ToListAsync();
+
+            if (listmes.Count==0)
+            {
+                ChatUser chatUser = new ChatUser();
+                chatUser.UserId = id;
+                chatUser.Message = "admin" + "," + DateTime.Now + "," +"Bạn đã bắt đầu đoạn chat với DoubleL Store. Chúng tôi dùng thông tin từ đoạn chat này để cải thiện trải nghiệm của bạn";
+
+                chatUser.isNewMessageUser = false;
+                chatUser.isNewMessageAdmin = false;
+                if (allMess.Count > 0)
+                {
+                    for (int i = 0; i < allMess.Count; i++)
+                        allMess[i].DisplayPriority++;
+                }
+                chatUser.DisplayPriority = 1;
+           
+                
+                _context.ChatUsers.Add(chatUser);
+                await _context.SaveChangesAsync();
+                listmes = await _context.ChatUsers.Where(x => x.UserId == id).ToListAsync();
+                var user = await _context.Users.ToListAsync();
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
+
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+
+                var result = await pusher.TriggerAsync(
+              "my-channel",
+              "my-event",
+              new
+              {
+                  message = "admin" + "," + DateTime.Now + "," + chatUser.Message,
+                  chatId = chatUser.ChatId
+              });
+                ;
+                
+                
+
+            }    
+            return Ok(listmes);
+
+
         }
     }
 }

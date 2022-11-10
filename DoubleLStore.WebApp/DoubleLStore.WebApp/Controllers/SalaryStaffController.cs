@@ -51,15 +51,36 @@ namespace DoubleLStore.WebApp.Controllers
 
                 var salary = await _context.SalaryStaffs.Where(x=>x.StaffId == staffid && x.Month==monthyear).ToListAsync();
                 if(salary.Count==0)
-                {
-                 
+                {    
+                    SalaryStaff salaryStaff = new SalaryStaff();
+                    salaryStaff.StaffId = staff[0].Id;
+                    salaryStaff.isWorking = true;
+                    var currentMonth = DateTime.Now.Month.ToString();
+                    var currentYear = DateTime.Now.Year.ToString();
+                    salaryStaff.Month = currentMonth + "/" + currentYear;
+                    salaryStaff.NumberOfWorking = 0;
+                    var currentDay = DateTime.Now.Day.ToString();
+                    salaryStaff.ListDayWorking = "";
+
+                    salaryStaff.Salary = staff[0].Salary;
+                    salaryStaff.SalaryOfThisMonth = "0";
+                    _context.SalaryStaffs.Add(salaryStaff);
+                    await _context.SaveChangesAsync();
+                    var oldmonthyear = (DateTime.Now.Month-1).ToString() + "/" + DateTime.Now.Year.ToString();
+
+                    var oldsalary = await _context.SalaryStaffs.Where(x => x.StaffId == staffid && x.Month == oldmonthyear).ToListAsync();
+                    oldsalary[0].isWorking = false;
+                    await _context.SaveChangesAsync();
+                    var newsalary = await _context.SalaryStaffs.Where(x => x.StaffId == staffid && x.Month == monthyear).ToListAsync();
+
+                    return Ok(new Response { Status = 200, Message = "Success", Data = newsalary });
                 }    
  
 
 
 
 
-                return Ok(new Response { Status = 200, Message = "Success", Data = salary }) ;
+                else return Ok(new Response { Status = 200, Message = "Success", Data = salary }) ;
             }    
             else
                 return BadRequest(new Response { Status = 400, Message = "Bạn không có quyền admin" });

@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="PayPal" Version="2.0.0-rc2" />
+    <PackageReference Include="PusherServer" Version="4.6.1" />
     <PackageReference Include="Sek.Module.Payment.VnPay.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Sek.Module.Payment.VnPay.Common" Version="1.0.0" />
     <PackageReference Include="Sek.Module.Payment.VnPay.Core" Version="1.0.0" />

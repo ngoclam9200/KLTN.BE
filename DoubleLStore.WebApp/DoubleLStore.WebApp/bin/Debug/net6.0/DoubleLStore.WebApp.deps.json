@@ -19,6 +19,7 @@
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
           "NETCore.MailKit": "2.1.0",
           "PayPal": "2.0.0-rc2",
+          "PusherServer": "4.6.1",
           "Sek.Module.Payment.VnPay.AspNetCore": "1.0.0",
           "Sek.Module.Payment.VnPay.Common": "1.0.0",
           "Sek.Module.Payment.VnPay.Core": "1.0.0",
@@ -588,6 +589,14 @@
           }
         }
       },
+      "NaCl.Net/0.1.13": {
+        "runtime": {
+          "lib/netstandard2.1/NaCl.dll": {
+            "assemblyVersion": "0.1.13.0",
+            "fileVersion": "0.1.13.0"
+          }
+        }
+      },
       "NETCore.MailKit/2.1.0": {
         "dependencies": {
           "MailKit": "3.4.1",
@@ -640,6 +649,18 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
             "assemblyVersion": "1.9.0.0",
             "fileVersion": "1.9.0.1"
+          }
+        }
+      },
+      "PusherServer/4.6.1": {
+        "dependencies": {
+          "NaCl.Net": "0.1.13",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/PusherServer.dll": {
+            "assemblyVersion": "4.6.1.0",
+            "fileVersion": "4.6.1.0"
           }
         }
       },
@@ -1431,6 +1452,13 @@
       "path": "mimekit/3.4.1",
       "hashPath": "mimekit.3.4.1.nupkg.sha512"
     },
+    "NaCl.Net/0.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AVg1455RQnyTy6tiessudruZHvbl70QWRPyx3og2I1Fei17LDNc7Z3DRgqN2+PsySBui/1EDP4A7adhQXydi6g==",
+      "path": "nacl.net/0.1.13",
+      "hashPath": "nacl.net.0.1.13.nupkg.sha512"
+    },
     "NETCore.MailKit/2.1.0": {
       "type": "package",
       "serviceable": true,
@@ -1465,6 +1493,13 @@
       "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
       "path": "portable.bouncycastle/1.9.0",
       "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
+    },
+    "PusherServer/4.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3YUWmFAj5szTwxXmPXXMuaH7uO0OSt1CgqCbEIDERDxGPRw323U+vv+1nALvFaVPxAOS0TSYhTBCL9Ns+i/w8g==",
+      "path": "pusherserver/4.6.1",
+      "hashPath": "pusherserver.4.6.1.nupkg.sha512"
     },
     "Sek.Module.Base.AspNetCore/1.0.0": {
       "type": "package",

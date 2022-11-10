@@ -10,8 +10,8 @@ namespace DoubleLStore.WebApp.Configurations
         {
             builder.ToTable("ChatUsers");
             builder.HasKey(x => x.ChatId);
-            builder.Property(x=>x.isNewMessageAdmin).HasDefaultValue(false);
-            builder.Property(x => x.isNewMessageUser).HasDefaultValue(false);
+            //builder.Property(x=>x.isNewMessageAdmin).HasDefaultValue(false);
+            //builder.Property(x => x.isNewMessageUser).HasDefaultValue(false);
         }
     }
 }

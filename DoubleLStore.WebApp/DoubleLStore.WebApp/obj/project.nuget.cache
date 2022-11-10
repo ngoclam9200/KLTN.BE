@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ssgFu1+z23s5k0FMwKv3VsFGHuG0Ws8Ws2V7mQhS+Kvm5GcmbWgjOBEFUls+02pQ5YSsH8IqjfZpYx8GzFzvgA==",
+  "dgSpecHash": "k6dDc3UJR67Tg8qewjP04IjuUnnsLSWriMOfvrAum2goFh/XDUhv/x2hG85RGaD86mVsEN0Q/V9kQgx3w4MaQA==",
   "success": true,
   "projectFilePath": "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
   "expectedPackageFiles": [
@@ -70,11 +70,13 @@
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\mimekit\\3.4.1\\mimekit.3.4.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\nacl.net\\0.1.13\\nacl.net.0.1.13.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\netcore.mailkit\\2.1.0\\netcore.mailkit.2.1.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\openiddict.abstractions\\3.1.0\\openiddict.abstractions.3.1.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\paypal\\2.0.0-rc2\\paypal.2.0.0-rc2.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\pusherserver\\4.6.1\\pusherserver.4.6.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\sek.module.base.aspnetcore\\1.0.0\\sek.module.base.aspnetcore.1.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\sek.module.base.common\\1.0.0\\sek.module.base.common.1.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\sek.module.base.core\\1.0.0\\sek.module.base.core.1.0.0.nupkg.sha512",

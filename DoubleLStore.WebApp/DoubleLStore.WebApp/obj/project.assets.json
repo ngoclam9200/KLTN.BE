@@ -898,6 +898,15 @@
           "lib/net6.0/MimeKit.dll": {}
         }
       },
+      "NaCl.Net/0.1.13": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/NaCl.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/NaCl.dll": {}
+        }
+      },
       "NETCore.MailKit/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -956,6 +965,19 @@
         },
         "runtime": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "PusherServer/4.6.1": {
+        "type": "package",
+        "dependencies": {
+          "NaCl.Net": "0.1.13",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/PusherServer.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/PusherServer.dll": {}
         }
       },
       "Sek.Module.Base.AspNetCore/1.0.0": {
@@ -2838,6 +2860,27 @@
         "mimekit.nuspec"
       ]
     },
+    "NaCl.Net/0.1.13": {
+      "sha512": "AVg1455RQnyTy6tiessudruZHvbl70QWRPyx3og2I1Fei17LDNc7Z3DRgqN2+PsySBui/1EDP4A7adhQXydi6g==",
+      "type": "package",
+      "path": "nacl.net/0.1.13",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/NaCl.dll",
+        "lib/net45/NaCl.xml",
+        "lib/net472/NaCl.dll",
+        "lib/net472/NaCl.xml",
+        "lib/netstandard1.3/NaCl.dll",
+        "lib/netstandard1.3/NaCl.xml",
+        "lib/netstandard2.0/NaCl.dll",
+        "lib/netstandard2.0/NaCl.xml",
+        "lib/netstandard2.1/NaCl.dll",
+        "lib/netstandard2.1/NaCl.xml",
+        "nacl.net.0.1.13.nupkg.sha512",
+        "nacl.net.nuspec"
+      ]
+    },
     "NETCore.MailKit/2.1.0": {
       "sha512": "+1C0sg4YJQczp/2RVrVbKLIntg7Mou7Ie5M01UBiAsxmIarjfBRlCgKK4sEbPyGask52VRKV29/Zi+41B6LPXA==",
       "type": "package",
@@ -2920,6 +2963,25 @@
         "lib/netstandard2.0/BouncyCastle.Crypto.xml",
         "portable.bouncycastle.1.9.0.nupkg.sha512",
         "portable.bouncycastle.nuspec"
+      ]
+    },
+    "PusherServer/4.6.1": {
+      "sha512": "3YUWmFAj5szTwxXmPXXMuaH7uO0OSt1CgqCbEIDERDxGPRw323U+vv+1nALvFaVPxAOS0TSYhTBCL9Ns+i/w8g==",
+      "type": "package",
+      "path": "pusherserver/4.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "PusherServer.public.snk",
+        "README.md",
+        "icon-128.png",
+        "lib/net45/PusherServer.dll",
+        "lib/net472/PusherServer.dll",
+        "lib/netstandard1.3/PusherServer.dll",
+        "lib/netstandard2.0/PusherServer.dll",
+        "pusherserver.4.6.1.nupkg.sha512",
+        "pusherserver.nuspec"
       ]
     },
     "Sek.Module.Base.AspNetCore/1.0.0": {
@@ -4127,6 +4189,7 @@
       "Microsoft.Extensions.Configuration.Json >= 6.0.0",
       "NETCore.MailKit >= 2.1.0",
       "PayPal >= 2.0.0-rc2",
+      "PusherServer >= 4.6.1",
       "Sek.Module.Payment.VnPay.AspNetCore >= 1.0.0",
       "Sek.Module.Payment.VnPay.Common >= 1.0.0",
       "Sek.Module.Payment.VnPay.Core >= 1.0.0",
@@ -4224,6 +4287,10 @@
           "PayPal": {
             "target": "Package",
             "version": "[2.0.0-rc2, )"
+          },
+          "PusherServer": {
+            "target": "Package",
+            "version": "[4.6.1, )"
           },
           "Sek.Module.Payment.VnPay.AspNetCore": {
             "target": "Package",

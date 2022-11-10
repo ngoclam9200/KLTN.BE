@@ -84,3 +84,5 @@ D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\D
 D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\Debug\net6.0\Sek.Module.Payment.VnPay.Core.dll
 D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\Debug\net6.0\System.Linq.Dynamic.Core.dll
 D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\Debug\net6.0\TimeZoneConverter.dll
+D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\Debug\net6.0\NaCl.dll
+D:\khoa luan tot nghiep\BE\KLTN.BE\DoubleLStore.WebApp\DoubleLStore.WebApp\bin\Debug\net6.0\PusherServer.dll

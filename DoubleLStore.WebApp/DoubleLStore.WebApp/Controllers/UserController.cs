@@ -3,6 +3,7 @@ using DoubleLStore.WebApp.EF;
 using DoubleLStore.WebApp.Entities;
 using DoubleLStore.WebApp.IService;
 using DoubleLStore.WebApp.ViewModels;
+using DoubleLStore.WebApp.ViewModels.Admin;
 using DoubleLStore.WebApp.ViewModels.Mail;
 using DoubleLStore.WebApp.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
@@ -471,6 +472,35 @@ namespace DoubleLStore.WebApp.Controllers
 
         }
 
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePass([FromBody] ChangePassRequest request)
+        {
 
+            var finduser = await _context.Users.FindAsync(request.Id);
+            if (finduser == null)
+            {
+                return NotFound(new Response { Status = 404, Message = "Người dùng không tồn tại" });
+            }
+
+            else
+            {
+
+
+                if (finduser.Password == request.OldPassword)
+                {
+                    finduser.Password = request.NewPassword;
+
+                    await _context.SaveChangesAsync();
+                    return Ok(new Response { Status = 200, Message = "Mật khẩu đã được chỉnh sửa", Data = request });
+                }
+                else
+                {
+                    return BadRequest(new Response { Status = 400, Message = "Mật khẩu cũ không đúng", Data = request });
+
+                }
+ 
+            }
+ 
+        }
     }
 }
