@@ -4,6 +4,7 @@ using DoubleLStore.WebApp.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoubleLStore.WebApp.Migrations
 {
     [DbContext(typeof(doubleLStoreDbContext))]
-    partial class doubleLStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112112306_updatchat")]
+    partial class updatchat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,9 +211,6 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("isNewMessageAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("isNewMessageUser")
                         .HasColumnType("bit");
 
@@ -350,9 +349,6 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("isNewNotifi")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

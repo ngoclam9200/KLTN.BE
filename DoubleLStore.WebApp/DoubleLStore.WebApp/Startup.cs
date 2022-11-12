@@ -27,6 +27,7 @@ namespace DoubleLStore.WebApp
             services.AddDbContext<doubleLStoreDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DoubelLStoreDb")));
             services.AddControllers();
+            //services.AddMvc();
             //services.AddControllers().AddNewtonsoftJson(options =>
             //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             //    );
@@ -98,6 +99,7 @@ namespace DoubleLStore.WebApp
 
             app.UseRouting();
             app.UseCors("Allow");
+
             app.UseCors(builder => builder
                 //.AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -111,7 +113,12 @@ namespace DoubleLStore.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+
             });
+
+
+
         }
     }
 }

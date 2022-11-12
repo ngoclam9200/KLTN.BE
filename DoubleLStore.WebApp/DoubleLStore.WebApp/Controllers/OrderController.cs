@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayPal.Core;
 using PayPal.v1.Payments;
+using PusherServer;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Text;
@@ -554,10 +555,33 @@ namespace DoubleLStore.WebApp.Controllers
                 Notifi notifi= new Notifi();
                 notifi.DateCreated=DateTime.Now;
                 notifi.UserId=findorder.UserId;
+                notifi.isNewNotifi = true;
                 notifi.Message = "Đơn hàng" + " " + findorder.Id + " " + "đang giao đến cho bạn";
                 _context.Notifis.Add(notifi);
-
                 await _context.SaveChangesAsync();
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
+
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+               
+                    var result = await pusher.TriggerAsync(
+                  "my-order",
+                  "confirm-order",
+                  new
+                  {
+                      message = "Đơn hàng" + " " + findorder.Id + " " + "đang giao đến cho bạn",
+                      
+                  });
+               
+
+              
 
 
             }
@@ -602,6 +626,7 @@ namespace DoubleLStore.WebApp.Controllers
                 Notifi notifi = new Notifi();
                 notifi.DateCreated = DateTime.Now;
                 notifi.UserId = findorder.UserId;
+                notifi.isNewNotifi = true;
                 notifi.Message = "Đơn hàng" + " " + findorder.Id + " " + "đã hủy";
                 _context.Notifis.Add(notifi);
                 if (findorder.VoucherId != "0")
@@ -611,7 +636,26 @@ namespace DoubleLStore.WebApp.Controllers
                     voucher.AmountRemaining += 1;
                 }
                 await _context.SaveChangesAsync();
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
 
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+
+                var result = await pusher.TriggerAsync(
+              "my-order",
+              "confirm-order",
+              new
+              {
+                  message = "Đơn hàng" + " " + findorder.Id + " " + "đã hủy",
+
+              });
 
             }
             catch (IndexOutOfRangeException e)

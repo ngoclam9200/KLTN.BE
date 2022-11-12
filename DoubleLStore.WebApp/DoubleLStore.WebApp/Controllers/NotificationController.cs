@@ -66,5 +66,36 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Not found" });
 
         }
+        [HttpGet("get-count-notifi-unread/{userid}")]
+
+        public async Task<IActionResult> GetCountNotifi(string userid)
+        {
+
+
+
+            var count = await _context.Notifis.Where(x => x.UserId == userid && x.isNewNotifi == true).CountAsync();
+
+
+            return Ok(count);
+
+        }
+        [HttpGet("seen-notifi/{userid}")]
+
+        public async Task<IActionResult> SeenNotifi(string userid)
+        {
+
+
+
+            var listnotifi = await _context.Notifis.Where(x => x.UserId == userid && x.isNewNotifi == true).ToListAsync();
+
+            for(int i= 0;i<listnotifi.Count;i++)
+            {
+                listnotifi[i].isNewNotifi = false;
+            }
+            await _context.SaveChangesAsync();
+            return Ok(new Response { Status = 200, Message = "Đã xem thông báo"});
+
+        }
+
     }
 }

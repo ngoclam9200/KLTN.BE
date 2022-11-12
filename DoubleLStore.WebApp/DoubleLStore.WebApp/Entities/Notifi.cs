@@ -10,5 +10,6 @@ namespace DoubleLStore.WebApp.Entities
         public Users User { get; set; }
         public string Message { get; set; }
         public DateTime DateCreated { get; set; }
+        public bool isNewNotifi { get; set; }
     }
 }

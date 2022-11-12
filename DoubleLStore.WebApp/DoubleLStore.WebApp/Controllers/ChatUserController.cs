@@ -39,10 +39,12 @@ namespace DoubleLStore.WebApp.Controllers
 
         public async Task<IActionResult> GetCountMessage()
         {
+
+
+
+            var listmes = await _context.ChatUsers.Where(
+                x => x.isNewMessageAdmin == true).CountAsync();
             
-
-
-            var listmes = await _context.ChatUsers.Where(x=>x.isNewMessageAdmin==true).CountAsync();
 
             return Ok(listmes);
  
@@ -55,12 +57,12 @@ namespace DoubleLStore.WebApp.Controllers
 
 
             var listmes = await _context.ChatUsers.FindAsync(request.ChatId);
-            if(request.isAdmin==true)
-            listmes.isNewMessageAdmin = false;
-            else listmes.isNewMessageUser = false ;
+            if (request.isAdmin == true)
+                listmes.isNewMessageAdmin = false;
+            else listmes.isNewMessageUser = false;
             await _context.SaveChangesAsync();
 
-            return Ok(new Response { Status = 200, Message = "Tin nhắn đã được xem" });
+            return Ok(new Response { Status = 200, Message = "Tin nhắn đã được xem" , Data=listmes});
 
         }
 
@@ -79,7 +81,7 @@ namespace DoubleLStore.WebApp.Controllers
             }
 
 
-            try
+            else
             {
                 if(request.isAdmin==true)
                 {
@@ -91,18 +93,24 @@ namespace DoubleLStore.WebApp.Controllers
 
                 else
                 {
-                    if(findmesage.DisplayPriority == allMess.Count)
+                    findmesage.isNewMessageAdmin = true;
+                    findmesage.isNewMessageUser = false;
+                    findmesage.Message = findmesage.Message + "|user" + "," + DateTime.Now + "," + request.Message;
+                    if (findmesage.DisplayPriority == allMess.Count)
                     {
                         findmesage.DisplayPriority = 1;
-                        for(int i= 0; i < allMess.Count; i++)
-                        {   if(findmesage.ChatId != allMess[i].ChatId)
-                            allMess[i].DisplayPriority +=1;
-                        }    
+                        for (int i = 0; i < allMess.Count; i++)
+                        {
+                            if (findmesage.ChatId != allMess[i].ChatId)
+                                allMess[i].DisplayPriority += 1;
+                        }
+
                     }
-                    
+
                     else
-                    { 
-                        if(findmesage.DisplayPriority!=1)
+                    {
+
+                        if (findmesage.DisplayPriority != 1)
                         {
                             findmesage.DisplayPriority = 1;
                             for (int i = 0; i < allMess.Count; i++)
@@ -110,14 +118,12 @@ namespace DoubleLStore.WebApp.Controllers
                                 if (findmesage.ChatId != allMess[i].ChatId && i != allMess.Count - 1)
                                     allMess[i].DisplayPriority += 1;
                             }
-                        }    
-                       
-                    } 
-                        
-                    findmesage.isNewMessageAdmin = true;
-                    findmesage.isNewMessageUser = false;
+                        }
 
-                    findmesage.Message = findmesage.Message + "|user" + "," + DateTime.Now + "," + request.Message;
+                    }
+
+
+
 
                 }
 
@@ -139,7 +145,8 @@ namespace DoubleLStore.WebApp.Controllers
                   "my-channel",
                   "my-event",
                   new { message = "admin" + "," + DateTime.Now + "," + request.Message ,
-                  chatId=request.Id});
+                  chatId=request.Id, 
+                  isAdminSend=true});
                 }    
                 else
                 {
@@ -149,16 +156,13 @@ namespace DoubleLStore.WebApp.Controllers
                  new { message = "user" + "," + DateTime.Now + "," + request.Message,
                      chatId = request.Id
                  });
-                }    
-                   
+                }
 
+                return Ok(new Response { Status = 200, Message = "Tin nhắn đã được gơi", Data = findmesage });
 
             }
-            catch (IndexOutOfRangeException e)
-            {
-                return BadRequest(new Response { Status = 400, Message = e.ToString() });
-            }
-            return Ok(new Response { Status = 200, Message = "Tin nhắn đã được gơi", Data = request });
+           
+            
         }
         [HttpGet("get-message-by-userid/{id}")]
 
@@ -175,7 +179,7 @@ namespace DoubleLStore.WebApp.Controllers
                 chatUser.Message = "admin" + "," + DateTime.Now + "," +"Bạn đã bắt đầu đoạn chat với DoubleL Store. Chúng tôi dùng thông tin từ đoạn chat này để cải thiện trải nghiệm của bạn";
 
                 chatUser.isNewMessageUser = false;
-                chatUser.isNewMessageAdmin = false;
+                chatUser.isNewMessageAdmin = true;
                 if (allMess.Count > 0)
                 {
                     for (int i = 0; i < allMess.Count; i++)
