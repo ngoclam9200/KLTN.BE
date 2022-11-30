@@ -225,6 +225,34 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
+        [HttpGet("search-product-in-category/{categoryid}/{name}")]
+        public async Task<IActionResult> SearchProductInCategory(string categoryid, string name)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+
+            if (RoleId == "1" || RoleId == "2" || RoleId=="3")
+            {
+                var findprod = await _context.Products.Where(s => s.Name.StartsWith(name.Trim()) && s.isDeleted == false && s.CategoryId==categoryid).ToListAsync();
+                if (findprod.Count > 0)
+                    return Ok(new Response { Status = 200, Message = "Success", Data = findprod });
+                else return Ok(new Response { Status = 200, Message = "Không tìm thấy" });
+            }
+            else return BadRequest(new Response { Status = 400, Message = "Bạn không có quyền tìm kiếm " });
+
+
+        }
         [HttpPost("add-image-product")]
 
         public async Task<IActionResult> AddImageProduct(AddImageProductRequest request)

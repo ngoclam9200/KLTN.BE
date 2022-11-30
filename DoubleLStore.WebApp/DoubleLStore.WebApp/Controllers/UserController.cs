@@ -471,6 +471,45 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
+        [HttpPost("cskh")]
+
+        public async Task<IActionResult> CSKH(CSKHRequest request)
+
+        {
+           
+            
+            try
+            {
+               
+                var message = new MailRequest();
+                message.Subject = "Vấn đề " + request.Problem ;
+                message.ToEmail = "cskhdoublel@gmail.com";
+                message.Body = request.Content +
+                    "<br/>" +
+                    "Liên hệ :" + request.Email + "(" + request.Fullname + ")" ;
+
+
+                ;
+                try
+                {
+                    await _mailService.SendEmailAsync(message);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                return Ok(new Response { Status = 200, Message = "Gởi mail thành công" });
+
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Gởi mail thất bại" });
+            }
+
+
+        }
 
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePass([FromBody] ChangePassRequest request)

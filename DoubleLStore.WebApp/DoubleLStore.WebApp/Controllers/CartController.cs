@@ -238,6 +238,7 @@ namespace DoubleLStore.WebApp.Controllers
                 if (findcart.Count==1)
                 {
                     findcart[0].Quantity += 1;
+                  
                 }
                 else
                 {
@@ -246,7 +247,7 @@ namespace DoubleLStore.WebApp.Controllers
                     cart.ProductId = request.ProductId;
                     cart.Quantity = 1;
                     cart.DateCreated = DateTime.Now;
-
+                  
 
                     _context.Carts.Add(cart);
                 }
@@ -285,6 +286,7 @@ namespace DoubleLStore.WebApp.Controllers
                     try
                     {
                         //_context.Roles.is(role);
+                       
                         _context.Remove(cart);
                         await _context.SaveChangesAsync();
                         return Ok(new Response { Status = 200, Message = "Xóa  sản phẩm thành công!" });
@@ -332,6 +334,7 @@ namespace DoubleLStore.WebApp.Controllers
                     {
                         for(int i=0; i < cart.Count; i++)
                         {
+                           
                             _context.Remove(cart[i]);
                         }    
                         //_context.Roles.is(role);

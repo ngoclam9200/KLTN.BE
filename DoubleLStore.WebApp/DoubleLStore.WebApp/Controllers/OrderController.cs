@@ -606,8 +606,7 @@ namespace DoubleLStore.WebApp.Controllers
                 return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
             }
             RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
-            if (RoleId != "1")
-                return BadRequest(new Response { Status = 400, Message = "Không có quyền!" });
+            
 
 
             var findorder = await _context.Orders.FindAsync(request.Id);
@@ -621,6 +620,13 @@ namespace DoubleLStore.WebApp.Controllers
             {
              
                 findorder.StatusOrderId = "4";
+                var findOrderDetail = await _context.OrderDetails.Where(s=>s.OrderId==findorder.Id).ToListAsync();
+                for(int i =0; i < findOrderDetail.Count; i++)
+                {
+                    var findprod = await _context.Products.FindAsync(findOrderDetail[i].ProductId);
+                    findprod.Stock += findOrderDetail[i].ProductCount;
+                    await _context.SaveChangesAsync();
+                }    
                 //var prod = await _context.Products.FindAsync(findorder.ProductId);
                 //prod.Stock += 1;
                 Notifi notifi = new Notifi();
@@ -916,10 +922,18 @@ namespace DoubleLStore.WebApp.Controllers
                 for (int i = 0; i < request.ListProduct.Count; i++)
                 {
 
+                    var findprod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.ProductId = request.ListProduct[i].ProductId;
                     orderDetail.OrderId = order.Id;
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
+                    orderDetail.PriceProduct = findprod.Price;
+                    orderDetail.DiscountProduct = findprod.Discount;
+                    //OrderDetail orderDetail = new OrderDetail();
+                    //orderDetail.ProductId = request.ListProduct[i].ProductId;
+                    //orderDetail.OrderId = order.Id;
+                    //orderDetail.PriceProduct=ListProduct
+                    //orderDetail.ProductCount = request.ListProduct[i].ProductCount;
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
@@ -1028,10 +1042,13 @@ namespace DoubleLStore.WebApp.Controllers
                 for (int i = 0; i < request.ListProduct.Count; i++)
                 {
 
+                    var findprod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.ProductId = request.ListProduct[i].ProductId;
                     orderDetail.OrderId = order.Id;
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
+                    orderDetail.PriceProduct = findprod.Price;
+                    orderDetail.DiscountProduct = findprod.Discount;
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
