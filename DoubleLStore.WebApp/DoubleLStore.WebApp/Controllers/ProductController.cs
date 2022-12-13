@@ -207,6 +207,52 @@ namespace DoubleLStore.WebApp.Controllers
             else return BadRequest(new Response { Status = 400, Message = "Xóa   sản phẩm thất bại!" });
 
         }
+        [HttpDelete("delete-image-product/{id}")]
+
+        public async Task<IActionResult> DeleteImageProduct(string id)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+            if (RoleId == "1" || RoleId == "2")
+            {
+
+                var imageProd = await _context.ImageProducts.FindAsync(id);
+                if (imageProd != null)
+                {
+
+                    try
+                    {
+                        //_context.Roles.is(role);
+                         _context.Remove(imageProd);
+                        await _context.SaveChangesAsync();
+                        return Ok(new Response { Status = 200, Message = "Xóa ảnh  sản phẩm thành công!" });
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return BadRequest(new Response { Status = 400, Message = e.ToString() });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new Response { Status = 400, Message = "Not found" });
+                }
+
+
+            }
+            else return BadRequest(new Response { Status = 400, Message = "Xóa   sản phẩm thất bại!" });
+
+        }
         [HttpGet("search-product-by-name/{name}")]
         public async Task<IActionResult> SearchProdByName(string name)
         {
@@ -420,6 +466,7 @@ namespace DoubleLStore.WebApp.Controllers
 
 
         }
+
         [HttpGet("get-product-by-cateid/{id}")]
 
         public async Task<IActionResult> GetProductByCateId(string id)
