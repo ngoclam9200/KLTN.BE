@@ -4,5 +4,6 @@
     {
         public string ProductId { get; set; }
         public int ProductCount { get; set; }
+        public string ProductSize { get; set; }
     }
 }

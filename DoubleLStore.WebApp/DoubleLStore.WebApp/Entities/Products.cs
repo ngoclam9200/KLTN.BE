@@ -17,8 +17,10 @@ namespace DoubleLStore.WebApp.Entities
 
         public int Discount { get; set; }
         public string Image { get; set; }
+
         public DateTime DateCreated { get; set; }
         public Categories Category { get; set; }
+        public bool isSize { get; set; }
         public bool isDeleted { get; set; }
 
     }

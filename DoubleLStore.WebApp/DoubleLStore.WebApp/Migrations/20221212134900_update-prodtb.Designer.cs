@@ -4,6 +4,7 @@ using DoubleLStore.WebApp.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoubleLStore.WebApp.Migrations
 {
     [DbContext(typeof(doubleLStoreDbContext))]
-    partial class doubleLStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221212134900_update-prodtb")]
+    partial class updateprodtb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,10 +149,6 @@ namespace DoubleLStore.WebApp.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("SizeProduct")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -388,10 +386,6 @@ namespace DoubleLStore.WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProductSize")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -464,38 +458,6 @@ namespace DoubleLStore.WebApp.Migrations
                     b.HasIndex("VoucherId");
 
                     b.ToTable("Orders", (string)null);
-                });
-
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.ProductDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("L")
-                        .HasColumnType("int");
-
-                    b.Property<int>("M")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("S")
-                        .HasColumnType("int");
-
-                    b.Property<int>("XL")
-                        .HasColumnType("int");
-
-                    b.Property<int>("XXL")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductDetails", (string)null);
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.Products", b =>
@@ -970,17 +932,6 @@ namespace DoubleLStore.WebApp.Migrations
                     b.Navigation("User");
 
                     b.Navigation("Voucher");
-                });
-
-            modelBuilder.Entity("DoubleLStore.WebApp.Entities.ProductDetail", b =>
-                {
-                    b.HasOne("DoubleLStore.WebApp.Entities.Products", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("DoubleLStore.WebApp.Entities.Products", b =>

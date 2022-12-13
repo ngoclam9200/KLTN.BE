@@ -33,6 +33,8 @@ namespace DoubleLStore.WebApp.EF
             modelBuilder.ApplyConfiguration(new InfoShopConfiguration());
             modelBuilder.ApplyConfiguration(new NotifiConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
+
 
 
             base.OnModelCreating(modelBuilder);    
@@ -57,6 +59,7 @@ namespace DoubleLStore.WebApp.EF
         public DbSet<Notifi> Notifis { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<CostVoucher> CostVouchers { get; set; }
+        public DbSet<ProductDetail> ProductDetails { get; set; }
         public object HttpContext { get; internal set; }
     }
 }

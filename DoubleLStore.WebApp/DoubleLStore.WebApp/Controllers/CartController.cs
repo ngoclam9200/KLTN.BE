@@ -164,7 +164,52 @@ namespace DoubleLStore.WebApp.Controllers
             }
             return Ok(new Response { Status = 200, Message = "Số lượng sản phẩm đã được chỉnh sửa", Data = request });
         }
-        
+        [HttpPut("change-size-product")]
+        public async Task<IActionResult> ChangeSize([FromBody] ChangeSizeRequest request)
+        {
+            var RoleId = "";
+            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            JwtSecurityToken token = null;
+            try
+            {
+                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            }
+            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+            if (RoleId != "3")
+                return BadRequest(new Response { Status = 400, Message = "Không có quyền!, vui lòng đăng nhập" });
+
+
+            var findproductincart = await _context.Carts.FindAsync(request.Id);
+            if (findproductincart == null)
+            {
+                return NotFound(new Response { Status = 404, Message = "Sản phẩm không tồn tại trong giỏ hàng" });
+            }
+
+
+            try
+            {
+                
+                
+                {
+                    findproductincart.Quantity = 1;
+                    findproductincart.SizeProduct = request.Size;
+
+                    await _context.SaveChangesAsync();
+                }
+ 
+
+
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return BadRequest(new Response { Status = 400, Message = e.ToString() });
+            }
+            return Ok(new Response { Status = 200, Message = "Size đã được chỉnh sửa", Data = request });
+        }
         [HttpPut("decrease-product")]
         public async Task<IActionResult> DeCreaseProduct([FromBody] IncreaseDecreaseProductRequest request)
         {
@@ -237,7 +282,7 @@ namespace DoubleLStore.WebApp.Controllers
                 var findcart = await _context.Carts.Where(x => x.UserId == request.UserId && x.ProductId == request.ProductId).ToListAsync();
                 if (findcart.Count==1)
                 {
-                    findcart[0].Quantity += 1;
+                    findcart[0].Quantity += request.Quantity;
                   
                 }
                 else
@@ -245,7 +290,8 @@ namespace DoubleLStore.WebApp.Controllers
                     Carts cart = new Carts();
                     cart.UserId = request.UserId;
                     cart.ProductId = request.ProductId;
-                    cart.Quantity = 1;
+                    cart.Quantity = request.Quantity;
+                    cart.SizeProduct = request.Size;
                     cart.DateCreated = DateTime.Now;
                   
 

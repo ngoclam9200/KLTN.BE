@@ -109,12 +109,17 @@ namespace DoubleLStore.WebApp.Controllers
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
                     orderDetail.PriceProduct = findprod.Price;
                     orderDetail.DiscountProduct = findprod.Discount;
-                    
+                    orderDetail.ProductSize = request.ListProduct[i].ProductSize;
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     prod.Stock -= request.ListProduct[i].ProductCount; ;
-
+                    var prodDetail = await _context.ProductDetails.Where(x=>x.ProductId==request.ListProduct[i].ProductId).ToListAsync();
+                    if(request.ListProduct[i].ProductSize=="S") prodDetail[0].S -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "M") prodDetail[0].M -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "L") prodDetail[0].L -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XL") prodDetail[0].XL -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XXL") prodDetail[0].XXL -= request.ListProduct[i].ProductCount;
                     await _context.SaveChangesAsync();
 
 
@@ -625,6 +630,15 @@ namespace DoubleLStore.WebApp.Controllers
                 {
                     var findprod = await _context.Products.FindAsync(findOrderDetail[i].ProductId);
                     findprod.Stock += findOrderDetail[i].ProductCount;
+                    if (findprod.isSize)
+                    {
+                        var prodDetail = await _context.ProductDetails.Where(x => x.ProductId == findOrderDetail[i].ProductId).ToListAsync();
+                        if (findOrderDetail[i].ProductSize == "S") prodDetail[0].S += findOrderDetail[i].ProductCount;
+                        if (findOrderDetail[i].ProductSize == "M") prodDetail[0].M += findOrderDetail[i].ProductCount;
+                        if (findOrderDetail[i].ProductSize == "L") prodDetail[0].L += findOrderDetail[i].ProductCount;
+                        if (findOrderDetail[i].ProductSize == "XL") prodDetail[0].XL += findOrderDetail[i].ProductCount;
+                        if (findOrderDetail[i].ProductSize == "XXL") prodDetail[0].XXL += findOrderDetail[i].ProductCount;
+                    }
                     await _context.SaveChangesAsync();
                 }    
                 //var prod = await _context.Products.FindAsync(findorder.ProductId);
@@ -929,16 +943,18 @@ namespace DoubleLStore.WebApp.Controllers
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
                     orderDetail.PriceProduct = findprod.Price;
                     orderDetail.DiscountProduct = findprod.Discount;
-                    //OrderDetail orderDetail = new OrderDetail();
-                    //orderDetail.ProductId = request.ListProduct[i].ProductId;
-                    //orderDetail.OrderId = order.Id;
-                    //orderDetail.PriceProduct=ListProduct
-                    //orderDetail.ProductCount = request.ListProduct[i].ProductCount;
+                    orderDetail.ProductSize = request.ListProduct[i].ProductSize;
+                 
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     prod.Stock -= request.ListProduct[i].ProductCount; ;
-
+                    var prodDetail = await _context.ProductDetails.Where(x => x.ProductId == request.ListProduct[i].ProductId).ToListAsync();
+                    if (request.ListProduct[i].ProductSize == "S") prodDetail[0].S -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "M") prodDetail[0].M -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "L") prodDetail[0].L -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XL") prodDetail[0].XL -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XXL") prodDetail[0].XXL -= request.ListProduct[i].ProductCount;
                     await _context.SaveChangesAsync();
 
 
@@ -1037,7 +1053,7 @@ namespace DoubleLStore.WebApp.Controllers
 
                 }
                 order.UnitPrice = unitPrice + order.ShippingFee;
-
+            
                 _context.Orders.Add(order);
                 for (int i = 0; i < request.ListProduct.Count; i++)
                 {
@@ -1049,11 +1065,17 @@ namespace DoubleLStore.WebApp.Controllers
                     orderDetail.ProductCount = request.ListProduct[i].ProductCount;
                     orderDetail.PriceProduct = findprod.Price;
                     orderDetail.DiscountProduct = findprod.Discount;
+                    orderDetail.ProductSize = request.ListProduct[i].ProductSize;
                     _context.OrderDetails.Add(orderDetail);
 
                     var prod = await _context.Products.FindAsync(request.ListProduct[i].ProductId);
                     prod.Stock -= request.ListProduct[i].ProductCount; ;
-
+                    var prodDetail = await _context.ProductDetails.Where(x => x.ProductId == request.ListProduct[i].ProductId).ToListAsync();
+                    if (request.ListProduct[i].ProductSize == "S") prodDetail[0].S -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "M") prodDetail[0].M -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "L") prodDetail[0].L -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XL") prodDetail[0].XL -= request.ListProduct[i].ProductCount;
+                    if (request.ListProduct[i].ProductSize == "XXL") prodDetail[0].XXL -= request.ListProduct[i].ProductCount;
                     //await _context.SaveChangesAsync();
 
 

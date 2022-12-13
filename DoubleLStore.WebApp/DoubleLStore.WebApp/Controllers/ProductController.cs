@@ -82,8 +82,18 @@ namespace DoubleLStore.WebApp.Controllers
                 products.Description = request.Description;
                 products.Image = request.Image;
                 products.isDeleted = false;
+                products.isSize = request.IsSize;
                 _context.Products.Add(products);
-
+                
+                 ProductDetail productDetail = new ProductDetail();
+                    productDetail.ProductId = products.Id;
+                    productDetail.S = request.S;
+                    productDetail.M = request.M;
+                    productDetail.L = request.L;
+                    productDetail.XL = request.XL;
+                    productDetail.XXL = request.XXL;
+                    _context.ProductDetails.Add(productDetail);
+                  
                 CostProduct costproduct = new CostProduct();
                 costproduct.ProductId = products.Id;
                 costproduct.Price = products.Price;
@@ -379,6 +389,35 @@ namespace DoubleLStore.WebApp.Controllers
 
 
             
+
+        }
+        [HttpGet("get-product-detail-by-product-id/{id}")]
+
+        public async Task<IActionResult> GetProductDetailByProductId(string id)
+        {
+
+
+            var prod = await _context.ProductDetails.Where(x=>x.ProductId==id).ToListAsync();
+            if (prod != null)
+            {
+
+                try
+                {
+
+                    return Ok(new Response { Status = 200, Message = "Lấy chi tiết sản phẩm thành công!", Data = prod });
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    return BadRequest(new Response { Status = 400, Message = e.ToString() });
+                }
+            }
+            else
+            {
+                return BadRequest(new Response { Status = 400, Message = "Not found" });
+            }
+
+
+
 
         }
         [HttpGet("get-product-by-cateid/{id}")]

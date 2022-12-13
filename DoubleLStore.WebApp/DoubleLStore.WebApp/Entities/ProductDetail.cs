@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
 namespace DoubleLStore.WebApp.Entities
 {
-    public class Carts
+    public class ProductDetail
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string ProductId { get; set; }
-        public int Quantity { get; set; }
-        public string SizeProduct { get; set; }
-        public string UserId { get; set; }
-        public Users User { get; set; }
         public Products Product { get; set; }
-        public DateTime DateCreated { get; set; }
+        public int S { get; set; }
+        public int M { get; set; }
+        public int L { get; set; }
+        public int XL { get; set; }
+        public int XXL { get; set; }
+
     }
 }
