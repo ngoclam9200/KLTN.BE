@@ -43,7 +43,7 @@ namespace DoubleLStore.WebApp.Controllers
             RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
 
 
-            if (RoleId == "1" )
+            if (RoleId == "1" || RoleId=="3" )
             {
                 var voucher = await _context.Vouchers.Where(x => x.isDeleted == false && x.DateExpiration> DateTime.Now).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = voucher });

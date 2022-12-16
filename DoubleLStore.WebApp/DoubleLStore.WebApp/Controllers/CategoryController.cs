@@ -49,7 +49,7 @@ namespace DoubleLStore.WebApp.Controllers
             }
             catch (IndexOutOfRangeException e)
             {
-                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+                return BadRequest(new Response { Status = 401, Message = "Không xác thực được người dùng" });
             }
             RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
             var findname = await _context.Categories.Where(u => u.Name.Trim() == request.Name.Trim()).ToListAsync();

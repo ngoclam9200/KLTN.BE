@@ -6,6 +6,7 @@ using DoubleLStore.WebApp.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace DoubleLStore.WebApp.Controllers
@@ -36,11 +37,42 @@ namespace DoubleLStore.WebApp.Controllers
 
         public async Task<IActionResult> GetLastestProduct()
         {
+            var month= DateTime.Now.Month;
+            var year= DateTime.Now.Year;
+            ArrayList listdata = new ArrayList();
+            var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
+            if (listproduct.Count <= 3)
+            {
+                for (int i = 0; i < listproduct.Count; i++)
+                {
+                    listdata.Add(listproduct[i]);
+                }    
+                    return Ok(new Response { Status = 200, Message = "Success", Data = listdata });
+            }
+            else
+            {
+                for (int i = 0; i < listproduct.Count; i++)
+                {
+                    var m = listproduct[i].DateCreated.Month;
+                    var y = listproduct[i].DateCreated.Year;
+                    if (m == month && y == year) listdata.Add(listproduct[i]);
+                    if (listdata.Count == 3) break;
+                    if (i == listproduct.Count - 1)
+                    {
+                        i = -1;
+                        if (month == 1)
+                        {
+                            month = 12;
+                            year = year--;
+
+                        }
+                        else month--;
+                    }
+                }
+                return Ok(new Response { Status = 200, Message = "Success", Data = listdata });
+            }    
+           
             
-                var listproduct = await _context.Products.Where(x => x.isDeleted == false).ToListAsync();
-            if (listproduct.Count > 3) listproduct = listproduct.GetRange(0, 3);
-            
-            return Ok(new Response { Status = 200, Message = "Success", Data = listproduct });
           
 
         }

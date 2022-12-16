@@ -109,7 +109,7 @@ namespace DoubleLStore.WebApp
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+         
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
