@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj": {}
+    "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj": {}
   },
   "projects": {
-    "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj": {
+    "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
+        "projectUniqueName": "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
         "projectName": "DoubleLStore.WebApp",
-        "projectPath": "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
+        "projectPath": "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\obj\\",
+        "outputPath": "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

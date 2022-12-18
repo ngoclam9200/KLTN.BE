@@ -196,6 +196,7 @@ namespace DoubleLStore.WebApp.Controllers
                 findstaff.Fullname = request.Fullname;
                 findstaff.Avatar = request.Avatar;
                 findstaff.Gender=request.Gender;
+                findstaff.Salary = request.Salary;
                 await _context.SaveChangesAsync();
 
 

@@ -28,27 +28,27 @@ namespace DoubleLStore.WebApp.Controllers
         
         public async Task<IActionResult> GetAllVoucher()
         {
-            var RoleId = "";
-            Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
-            JwtSecurityToken token = null;
-            try
-            {
-                token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
+            //var RoleId = "";
+            //Request.Headers.TryGetValue("Authorization", out var tokenheaderValue);
+            //JwtSecurityToken token = null;
+            //try
+            //{
+            //    token = _jwtAuthenticationManager.GetInFo(tokenheaderValue);
 
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
-            }
-            RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
+            //}
+            //catch (IndexOutOfRangeException e)
+            //{
+            //    return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
+            //}
+            //RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
 
 
-            if (RoleId == "1" || RoleId=="3" )
-            {
+            //if (RoleId == "1" || RoleId=="3" )
+            //{
                 var voucher = await _context.Vouchers.Where(x => x.isDeleted == false && x.DateExpiration> DateTime.Now).ToListAsync();
                 return Ok(new Response { Status = 200, Message = "Success", Data = voucher });
-            }
-            else return BadRequest(new Response { Status = 400, Message = "Ban khong co quyen truy cap" });
+            //}
+            //else return BadRequest(new Response { Status = 400, Message = "Ban khong co quyen truy cap" });
 
         }
         [HttpPost("create-voucher")]

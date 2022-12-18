@@ -8,7 +8,7 @@
         public string Email { get; set; }
         public string Phonenumber { get; set; }
         public string Avatar { get; set; }
-        public int Salary   { get; set; }
+        public string Salary   { get; set; }
         public string Gender { get; set; }
     }
 }

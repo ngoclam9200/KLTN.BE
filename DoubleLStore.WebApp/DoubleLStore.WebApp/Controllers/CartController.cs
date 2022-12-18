@@ -280,9 +280,27 @@ namespace DoubleLStore.WebApp.Controllers
             if (RoleId == "3")
             {
                 var findcart = await _context.Carts.Where(x => x.UserId == request.UserId && x.ProductId == request.ProductId).ToListAsync();
-                if (findcart.Count==1)
+                if (findcart.Count>0)
                 {
-                    findcart[0].Quantity += request.Quantity;
+                    for(int i = 0;i< findcart.Count; i++)
+                    {
+                        if(findcart[i].SizeProduct==request.Size)
+                            findcart[i].Quantity += request.Quantity;
+                        else
+                        {
+                            Carts cart = new Carts();
+                            cart.UserId = request.UserId;
+                            cart.ProductId = request.ProductId;
+                            cart.Quantity = request.Quantity;
+                            cart.SizeProduct = request.Size;
+                            cart.DateCreated = DateTime.Now;
+
+
+                            _context.Carts.Add(cart);
+                        }    
+
+                    }    
+                  
                   
                 }
                 else

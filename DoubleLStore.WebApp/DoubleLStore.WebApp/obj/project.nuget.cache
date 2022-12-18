@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nejVqnD+oOU2gS7VU4zqCVO7v3Y2Wxgewr/NTjMI+mABMdifKrTCdRpuN23X4Zydnrf7M5PaLpXcMl6ZK7wPtw==",
+  "dgSpecHash": "ugiO4W9+w8FSWin2CYjnGPtx+A59RUPytA6xNaDPUqXznoH3R1quuHwdPnrE62kLmli+Z3qjeJZv0r9w6iB3Jw==",
   "success": true,
-  "projectFilePath": "D:\\khoa luan tot nghiep\\test\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
+  "projectFilePath": "D:\\khoa luan tot nghiep\\BE\\KLTN.BE\\DoubleLStore.WebApp\\DoubleLStore.WebApp\\DoubleLStore.WebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
