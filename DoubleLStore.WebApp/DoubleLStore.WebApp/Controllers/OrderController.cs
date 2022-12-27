@@ -139,11 +139,32 @@ namespace DoubleLStore.WebApp.Controllers
                 }
 
 
-               
+                
                 await _context.SaveChangesAsync();
-              
-          
-             
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
+
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+
+                var result = await pusher.TriggerAsync(
+              "new-order",
+              "new-order",
+              new
+              {
+                  message = "Đơn hàng mới",
+
+              });
+
+
+
+
 
                 return Ok(new Response { Status = 200, Message = "Mua sản phẩm thành công" });
             }
@@ -977,7 +998,26 @@ namespace DoubleLStore.WebApp.Controllers
 
                 await _context.SaveChangesAsync();
 
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
 
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+
+                var result = await pusher.TriggerAsync(
+              "new-order",
+              "new-order",
+              new
+              {
+                  message = "Đơn hàng mới",
+
+              });
 
 
                 return Ok(new Response { Status = 200, Message = "Tạo hóa đơn thành công" });
@@ -1174,6 +1214,26 @@ namespace DoubleLStore.WebApp.Controllers
                 findorder.isPaid = true;
                 findorder.isPaymentOnline = true;
                 await _context.SaveChangesAsync();
+                var options = new PusherOptions
+                {
+                    Cluster = "ap1",
+                    Encrypted = true
+                };
+
+                var pusher = new Pusher(
+                  "1504639",
+                  "05ba42f251be5a21e7fa",
+                  "f43ca2126b9cc915b1e4",
+                  options);
+
+                var result = await pusher.TriggerAsync(
+              "new-order",
+              "new-order",
+              new
+              {
+                  message = "Đơn hàng mới",
+
+              });
                 return Ok((new Response { Status = 200, Message = "Thanh toán thành công" }));
 
 
