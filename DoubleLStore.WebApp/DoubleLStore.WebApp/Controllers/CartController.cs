@@ -275,33 +275,33 @@ namespace DoubleLStore.WebApp.Controllers
                 return BadRequest(new Response { Status = 400, Message = "Không xác thực được người dùng" });
             }
             RoleId = token.Claims.First(claim => claim.Type == "RoleId").Value;
- 
+
 
             if (RoleId == "3")
             {
-                var findcart = await _context.Carts.Where(x => x.UserId == request.UserId && x.ProductId == request.ProductId).ToListAsync();
-                if (findcart.Count>0)
+                var findcart = await _context.Carts.Where(x => x.UserId == request.UserId && x.ProductId == request.ProductId && x.SizeProduct == request.Size).ToListAsync();
+                if (findcart.Count > 0)
                 {
-                    for(int i = 0;i< findcart.Count; i++)
-                    {
-                        if(findcart[i].SizeProduct==request.Size)
-                            findcart[i].Quantity += request.Quantity;
-                        else
-                        {
-                            Carts cart = new Carts();
-                            cart.UserId = request.UserId;
-                            cart.ProductId = request.ProductId;
-                            cart.Quantity = request.Quantity;
-                            cart.SizeProduct = request.Size;
-                            cart.DateCreated = DateTime.Now;
+                    //for(int i = 0;i< findcart.Count; i++)
+                    //{
+                    //if(findcart[0].SizeProduct==request.Size)
+                    findcart[0].Quantity += request.Quantity;
+                    //else
+                    //{
+                    //    Carts cart = new Carts();
+                    //    cart.UserId = request.UserId;
+                    //    cart.ProductId = request.ProductId;
+                    //    cart.Quantity = request.Quantity;
+                    //    cart.SizeProduct = request.Size;
+                    //    cart.DateCreated = DateTime.Now;
 
 
-                            _context.Carts.Add(cart);
-                        }    
+                    //    _context.Carts.Add(cart);
+                    //}    
 
-                    }    
-                  
-                  
+                    //}    
+
+
                 }
                 else
                 {
@@ -311,12 +311,12 @@ namespace DoubleLStore.WebApp.Controllers
                     cart.Quantity = request.Quantity;
                     cart.SizeProduct = request.Size;
                     cart.DateCreated = DateTime.Now;
-                  
+
 
                     _context.Carts.Add(cart);
                 }
-                
-               
+
+
                 await _context.SaveChangesAsync();
                 return Ok(new Response { Status = 200, Message = "Thêm  sản phẩm vào giỏ hàng thành công" });
             }
